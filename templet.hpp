@@ -49,15 +49,38 @@ struct FileReader {
      * @return Contents of the file as a string
      */
     static std::string fromFile(const std::string& path) {
-        std::ifstream infile {path, std::ios_base::in};
-        if(!infile.is_open()) {
-            throw std::runtime_error("File not found");
+        std::ifstream infile {path, std::ios::in};
+        if(!infile) {
+            throw std::runtime_error("File not found: " + path);
         }
 
         std::stringstream ss;
         ss << infile.rdbuf();
 
         return ss.str();
+    }
+};
+
+/**
+ * @brief Writes string contents to a given file
+ */
+struct FileWriter {
+    /**
+     * @brief Write string contents to a file
+     *
+     * Note: Overwrites existing content
+     *
+     * @param path Path to file
+     * @param text String to write
+     * @exception std::runtime_error Thrown if file can't be opened
+     */
+    static void toFile(const std::string& path, const std::string& text) {
+        std::ofstream outfile {path, std::ios::out|std::ios::trunc};
+        if(!outfile) {
+            throw std::runtime_error("File can't be opened: " + path);
+        }
+
+        outfile << text;
     }
 };
 
@@ -89,6 +112,8 @@ private:
     /**
      * @brief Tokenize a string into a vector of nodes
      * @param in String to tokenize
+     * @exception templet::exception::InvalidTagError if the template contains an invalid tag
+     * @exception std::exception for any stdlib exceptions
      * @return Vector of tokenized nodes
      */
     std::vector<std::unique_ptr<nodes::Node>> tokenize(std::string &in);
@@ -103,13 +128,19 @@ public:
     Templet(std::string text);
 
     /**
-     * @brief readFromFile
-     *
-     * Set template from file
-     *
-     * Throws if FileReaderT throws
-     *
+     * @brief Write parsed template to file
      * @param path Path to file
+     * @exception std::runtime_error if file can't be opened
+     */
+    template <class FileWriterT = helpers::FileWriter>
+    void save(const std::string& path) {
+        FileWriterT::toFile(path, result());
+    }
+
+    /**
+     * @brief Set template from file
+     * @param path Path to file
+     * @exception std::runtime_error if file can't be opened
      */
     template <class FileReaderT = helpers::FileReader>
     void setTemplateFromFile(const std::string& path) {
@@ -118,25 +149,15 @@ public:
     }
 
     /**
-     * @brief setTemplate
-     *
-     * Set template from string
-     *
+     * @brief Set template from string
      * @param str Template string
      */
     void setTemplate(std::string str);
 
     /**
-     * @brief parse
-     *
-     * Parse the template and return parsed result as a string
-     *
-     * If the member function has already been called on the same
-     * template the old result is returned.
-     * Call \link setTemplate \endlink or \link setTemplateFromFile \endlink
-     * for the member function to re-parse the template.
-     *
+     * @brief Parse the template and return parsed result as a string
      * @param values Map of key-value pairs for parsing the template
+     * @exception templet::exception::InvalidTagError if the template contains an invalid tag
      * @return Parsed template as a string
      */
     std::string parse(templet::DataMap& values);

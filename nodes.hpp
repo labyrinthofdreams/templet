@@ -27,12 +27,22 @@ THE SOFTWARE.
 #ifndef NODES_HPP
 #define NODES_HPP
 
-#include <memory>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include "types.hpp"
 
 namespace templet {
+namespace exception {
+
+class InvalidTagError : public std::runtime_error {
+public:
+    InvalidTagError(const char* reason) : std::runtime_error(reason) {}
+    InvalidTagError(const std::string& reason) : std::runtime_error(reason) {}
+};
+
+} // namespace exception
+
 namespace nodes {
 
 using ::templet::types::DataMap;
@@ -86,10 +96,26 @@ class Value : public Node {
 private:
     std::string _name;
 
+    /**
+     * @brief Validate the value tag name
+     *
+     * Valid tag names may contain a-zA-Z0-9_-
+     *
+     * The dot (.) character is also allowed as a name separator
+     *
+     * @param tagName Name to validate
+     * @return True if valid, otherwise false
+     */
+    bool isValidTag(const std::string& tagName) const;
+
 public:
     /**
      * @brief Construct a value node with name
+     *
+     * See \link isValidTag \endlink for valid tag names
+     *
      * @param name Variable name to replace
+     * @exception Throws templet::exception::InvalidTagError if invalid tag name
      */
     Value(std::string name);
 
@@ -106,10 +132,26 @@ private:
     std::string _name;
     std::vector<std::unique_ptr<Node>> _nodes;
 
+    /**
+     * @brief Validate the if block node name
+     *
+     * Valid if block tag names may contain a-zA-Z0-9_-
+     *
+     * The dot (.) character is also allowed as a name separator
+     *
+     * @param tagName Name to validate
+     * @return True if valid, otherwise false
+     */
+    bool isValidTag(const std::string& tagName) const;
+
 public:
     /**
-     * @brief Construct a conditional if node with name
+     * @brief Construct an if block node with name
+     *
+     * See \link isValidTag \endlink for valid tag names
+     *
      * @param name Name of the conditional if block
+     * @exception Throws templet::exception::InvalidTagError if invalid tag name
      */
     IfValue(std::string name);
 
@@ -117,6 +159,28 @@ public:
 
     void evaluate(std::ostream& os, DataMap& kv) const override;
 };
+
+/**
+ * @brief Parse a value tag
+ *
+ * Ex: {$first_name}
+ *
+ * @param in String to parse
+ * @exception templet::exception::InvalidTagError if invalid tag
+ * @return Parsed tag as unique pointer to Value node
+ */
+std::unique_ptr<Node> parse_value_tag(std::string in);
+
+/**
+ * @brief Parse an if value tag
+ *
+ * Ex: {% if is_admin %}
+ *
+ * @param in String to parse
+ * @exception templet::exception::InvalidTagError if invalid tag
+ * @return Parsed tag as unique pointer to IfValue node
+ */
+std::unique_ptr<Node> parse_ifvalue_tag(std::string in);
 
 } // namespace nodes
 } // namespace templet

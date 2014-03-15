@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 #include "nodes.hpp"
+#include "strutils.hpp"
 #include "ptrutil.hpp"
 #include "templet.hpp"
 #include "trim.hpp"
@@ -51,11 +52,19 @@ void Templet::setTemplate(std::string str) {
 }
 
 std::string Templet::parse(DataMap &values) {
-    reset();
-    auto copied = _text;
-    _nodes = tokenize(copied);
-    for(const auto& node : _nodes) {
-        node->evaluate(_parsed, values);
+    try {
+        reset();
+        auto copied = _text;
+        _nodes = tokenize(copied);
+        for(const auto& node : _nodes) {
+            node->evaluate(_parsed, values);
+        }
+    }
+    catch(const templet::exception::InvalidTagError& ex) {
+        throw;
+    }
+    catch(...) {
+        throw;
     }
 
     return result();
@@ -65,7 +74,7 @@ std::string Templet::result() const {
     return _parsed.str();
 }
 
-std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) {
+std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) try {
     std::vector<std::unique_ptr<Node> > nodes;
     while(!in.empty()) {
         // Parse TEXT until first TAG
@@ -74,6 +83,7 @@ std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) {
            if(!in.empty()) {
                // Plain text
                nodes.push_back(make_unique<Text>(in));
+               in.clear();
            }
            break;
         }
@@ -82,59 +92,52 @@ std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) {
 
         // Find where the tag ends
         const auto end_pos = in.find('}');
-        if(pos == std::string::npos) {
+        if(end_pos == std::string::npos) {
            // Plain text
            nodes.push_back(make_unique<Text>(in));
+           in.clear();
            break;
         }
 
-        const auto tag = in.substr(0, end_pos);
-
-        // Inside the TAG
-        if(in[0] == '$') {
-           // {$ implies the opening of a variable (Value)
-           const auto cpos = in.find('}');
-           if(cpos != std::string::npos) {
-               nodes.push_back(make_unique<Value>(mylib::trimmed(in.substr(1, cpos - 1))));
-               in.substr(cpos + 1).swap(in);
-           }
-           else {
-               // Couldn't find }
-               nodes.push_back(make_unique<Text>("{"));
-               nodes.push_back(make_unique<Text>(in));
-               in.clear();
-           }
+        const auto tag = in.substr(0, end_pos + 1);
+        // Parse tag
+        if(tag[1] == '\\') {
+            // Ignored tag, remove the first \ after opening tag character
+            auto new_tag = tag.substr(2);
+            new_tag.insert(0, "{");
+            nodes.push_back(make_unique<Text>(new_tag));
+            in.substr(tag.size()).swap(in);
         }
-        else if(in[0] == '%') {
-           const auto cpos = in.find('}');
-           if(cpos != std::string::npos) {
-               // expr is {% whateverishere }
-               auto expr = mylib::trimmed(in.substr(1, cpos - 2));
-               const auto if_pos = expr.find("if");
-               if(if_pos != std::string::npos && if_pos == 0) {
-                   expr = mylib::ltrimmed(expr.substr(2));
-                   in.substr(cpos + 1).swap(in);
-                   auto val = make_unique<IfValue>(expr);
-                   val->setChildren(tokenize(in));
-                   nodes.push_back(std::move(val));
-                   continue;
-               }
-               const auto endif_pos = expr.find("endif");
-               if(endif_pos != std::string::npos && endif_pos == 0) {
-                   in.substr(cpos + 1).swap(in);
-                   break;
-               }
-           }
-           else {
-               // Couldn't find }
-               nodes.push_back(make_unique<Text>("{"));
-               nodes.push_back(make_unique<Text>(in));
-               in.clear();
-           }
+        else if(tag[1] == '$') {
+            auto node = ::templet::nodes::parse_value_tag(tag);
+            in.substr(tag.size()).swap(in);
+            nodes.push_back(std::move(node));
+        }
+        else if(tag[1] == '%') {
+            const auto inner = mylib::ltrimmed(tag.substr(2));
+            if(mylib::starts_with(inner, "endif")) {
+                in.substr(tag.size()).swap(in);
+                break;
+            }
+            else if(mylib::starts_with(inner, "if")) {
+                auto node = ::templet::nodes::parse_ifvalue_tag(tag);
+                in.substr(tag.size()).swap(in);
+                node->setChildren(tokenize(in));
+                nodes.push_back(std::move(node));
+            }
+            else {
+                throw templet::exception::InvalidTagError("Unrecognized tag: " + tag);
+            }
         }
         else {
-           nodes.push_back(make_unique<Text>("{"));
+            throw templet::exception::InvalidTagError("Unrecognized tag: " + tag);
         }
     }
     return nodes;
+}
+catch(const templet::exception::InvalidTagError& ex) {
+    throw;
+}
+catch(...) {
+    throw;
 }

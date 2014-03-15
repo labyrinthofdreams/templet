@@ -24,10 +24,16 @@ THE SOFTWARE.
 
 */
 
+#include <algorithm>
+#include <functional>
 #include <memory>
 #include <stdexcept>
+#include <utility>
 #include "nodes.hpp"
+#include "ptrutil.hpp"
 #include "split.hpp"
+#include "strutils.hpp"
+#include "trim.hpp"
 
 using namespace templet::nodes;
 
@@ -46,30 +52,39 @@ void Text::evaluate(std::ostream& os, DataMap& /*kv*/) const {
 
 Value::Value(std::string name)
     : Node(), _name(std::move(name)) {
-
+    if(!isValidTag(_name)) {
+        throw templet::exception::InvalidTagError("Tag name must only contain a-zA-Z0-9_-");
+    }
 }
 
 void Value::evaluate(std::ostream& os, DataMap& kv) const {
-    const bool has_dot = _name.find('.') != std::string::npos;
-    if(has_dot) {
-        auto tks = mylib::split(_name, '.');
-        if(tks.size() > 1) {
+    try {
+        if(kv.count(_name)) {
+            os << kv[_name]->getValue();
         }
     }
-    else {
-        try {
-            if(kv.count(_name)) {
-                os << kv[_name]->getValue();
-            }
-        }
-        catch(const std::exception &ex) {
-        }
+    catch(const std::exception &ex) {
     }
+}
+
+bool Value::isValidTag(const std::string& tagName) const {
+    if(tagName.empty()) {
+        return false;
+    }
+
+    // Tag names may only contain a-zA-Z0-9_-
+    auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
+                                                (c >= 'A' && c <= 'Z') ||
+                                                (c >= '0' && c <= '9') ||
+                                                (c == '_' || c == '-' || c == '.'); };
+    return std::all_of(tagName.cbegin(), tagName.cend(), std::cref(validator));
 }
 
 IfValue::IfValue(std::string name)
     : Node(), _name(std::move(name)), _nodes() {
-
+    if(!isValidTag(_name)) {
+        throw templet::exception::InvalidTagError("Tag name must only contain a-zA-Z0-9_-");
+    }
 }
 
 void IfValue::setChildren(std::vector<std::unique_ptr<Node>>&& children) {
@@ -83,4 +98,53 @@ void IfValue::evaluate(std::ostream& os, DataMap& kv) const {
             node->evaluate(os, kv);
         }
     }
+}
+
+bool IfValue::isValidTag(const std::string &tagName) const {
+    if(tagName.empty()) {
+        return false;
+    }
+
+    // Tag names may only contain a-zA-Z0-9_-
+    auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
+                                                (c >= 'A' && c <= 'Z') ||
+                                                (c >= '0' && c <= '9') ||
+                                                (c == '_' || c == '-' || c == '.'); };
+    return std::all_of(tagName.cbegin(), tagName.cend(), std::cref(validator));
+}
+
+std::unique_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
+    if(!mylib::starts_with(in, "{$") || !mylib::ends_with(in, "}")) {
+        throw templet::exception::InvalidTagError("Tag must be enclosed with {$ and }");
+    }
+
+    in.erase(0, 2);
+    const auto arr_pos = in.find('[');
+    if(arr_pos != std::string::npos) {
+        in.erase(arr_pos);
+    }
+    else {
+        in.erase(in.find('}'));
+    }
+    in = mylib::trim(in);
+    return mylib::make_unique<Value>(std::move(in));
+}
+
+std::unique_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
+    if(!mylib::starts_with(in, "{%") || !mylib::ends_with(in, "%}")) {
+        throw templet::exception::InvalidTagError("Tag must be enclosed with {% and %}");
+    }
+
+    in.erase(0, 2);
+    in.erase(in.find('%'));
+    in = mylib::trim(in);
+    if(!mylib::starts_with(in, "if ")) {
+        throw templet::exception::InvalidTagError("Tag must be prefixed with 'if '");
+    }
+
+    in = mylib::ltrim(in.erase(0, 3));
+
+    // TODO: Validate the variable name either via IfValue::is_valid_tag()
+    // or in the IfValue constructor
+    return mylib::make_unique<IfValue>(std::move(in));
 }
