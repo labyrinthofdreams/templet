@@ -47,6 +47,13 @@ namespace nodes {
 
 using ::templet::types::DataMap;
 
+enum class NodeType {
+    Invalid,
+    Text,
+    Value,
+    IfValue
+};
+
 /**
  * @brief The Node class represents a block from the template
  */
@@ -66,6 +73,8 @@ public:
      * @brief Evaluates the Node and outputs the computed value in ostream os
      */
     virtual void evaluate(std::ostream& /*os*/, DataMap& /*kv*/) const = 0;
+
+    virtual NodeType type() const;
 };
 
 /**
@@ -85,6 +94,8 @@ public:
     Text(std::string text);
 
     void evaluate(std::ostream& os, DataMap& /*kv*/) const override;
+
+    NodeType type() const override;
 };
 
 /**
@@ -95,6 +106,7 @@ public:
 class Value : public Node {
 private:
     std::string _name;
+    int _idx;
 
     /**
      * @brief Validate the value tag name
@@ -119,7 +131,11 @@ public:
      */
     Value(std::string name);
 
+    Value(std::string name, int idx);
+
     void evaluate(std::ostream& os, DataMap& kv) const override;
+
+    NodeType type() const override;
 };
 
 /**
@@ -158,6 +174,8 @@ public:
     void setChildren(std::vector<std::unique_ptr<Node>>&& children) override;
 
     void evaluate(std::ostream& os, DataMap& kv) const override;
+
+    NodeType type() const override;
 };
 
 /**

@@ -39,6 +39,10 @@ const DataVector& Data::getList() const {
     throw std::runtime_error("Data item is not of type list");
 }
 
+DataType Data::type() const {
+    return DataType::Invalid;
+}
+
 DataValue::DataValue(std::string value)
     : _value(std::move(value)) {
 
@@ -50,6 +54,10 @@ bool DataValue::empty() const {
 
 std::string DataValue::getValue() const {
     return _value;
+}
+
+DataType DataValue::type() const {
+    return DataType::String;
 }
 
 DataList::DataList(DataVector&& data)
@@ -70,4 +78,8 @@ bool DataList::empty() const {
 
 const DataVector& DataList::getList() const {
     return _data;
+}
+
+DataType DataList::type() const {
+    return DataType::List;
 }

@@ -42,6 +42,12 @@ using DataPtr = std::unique_ptr<Data>;
 using DataVector = std::vector<DataPtr>;
 using DataMap = std::map<std::string, DataPtr>;
 
+enum class DataType {
+    Invalid,
+    String,
+    List
+};
+
 /**
  * @brief The base Data class wraps user data in an interface
  * that is compatible with the library
@@ -71,6 +77,8 @@ public:
      * @return List of values as a vector
      */
     virtual const DataVector& getList() const;
+
+    virtual DataType type() const;
 };
 
 /**
@@ -88,6 +96,7 @@ public:
     DataValue(std::string value);
     bool empty() const override;
     std::string getValue() const override;
+    DataType type() const override;
 };
 
 /**
@@ -109,6 +118,7 @@ public:
 
     bool empty() const override;
     const DataVector& getList() const override;
+    DataType type() const override;
 };
 
 } // namespace types

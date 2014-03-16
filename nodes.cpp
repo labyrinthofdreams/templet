@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <utility>
 #include "nodes.hpp"
@@ -37,8 +38,22 @@ THE SOFTWARE.
 
 using namespace templet::nodes;
 
+namespace {
+
+// http://stackoverflow.com/a/10179308/110397
+bool parseNumber(const std::string& text, int& results) {
+    std::istringstream parser {text};
+    return parser >> results >> std::ws && parser.peek() == EOF;
+}
+
+}
+
 void Node::setChildren(std::vector<std::unique_ptr<Node>>&&) {
     throw std::runtime_error("This Node type cannot have children");
+}
+
+NodeType Node::type() const {
+    return NodeType::Invalid;
 }
 
 Text::Text(std::string text)
@@ -50,8 +65,17 @@ void Text::evaluate(std::ostream& os, DataMap& /*kv*/) const {
     os << _in;
 }
 
+NodeType Text::type() const {
+    return NodeType::Text;
+}
+
 Value::Value(std::string name)
-    : Node(), _name(std::move(name)) {
+    : Value(std::move(name), -1) {
+
+}
+
+Value::Value(std::string name, int idx)
+    : Node(), _name(std::move(name)), _idx(idx) {
     if(!isValidTag(_name)) {
         throw templet::exception::InvalidTagError("Tag name must only contain a-zA-Z0-9_-");
     }
@@ -59,12 +83,42 @@ Value::Value(std::string name)
 
 void Value::evaluate(std::ostream& os, DataMap& kv) const {
     try {
-        if(kv.count(_name)) {
+        if(!kv.count(_name)) {
+            return;
+        }
+
+        // TODO: Add support for items[n]...[n]
+        if(_idx >= 0) {
+            // Array index: item[n] where _idx = n
+            const auto& dataValue = kv[_name];
+            if(dataValue->type() == templet::types::DataType::List) {
+                // Access item in a list
+                const auto& data = dataValue->getList();
+                if(_idx >= data.size()) {
+                    throw templet::exception::InvalidTagError("Index out of range: " + _name);
+                }
+                os << data[_idx]->getValue();
+            }
+            else if(dataValue->type() == templet::types::DataType::String) {
+                // Access character in a string
+                const auto& data = dataValue->getValue();
+                if(_idx >= data.size()) {
+                    throw templet::exception::InvalidTagError("Index out of range: " + _name);
+                }
+                os << data[_idx];
+            }
+        }
+        else {
             os << kv[_name]->getValue();
         }
     }
-    catch(const std::exception &ex) {
+    catch(...) {
+        throw;
     }
+}
+
+NodeType Value::type() const {
+    return NodeType::Value;
 }
 
 bool Value::isValidTag(const std::string& tagName) const {
@@ -100,6 +154,11 @@ void IfValue::evaluate(std::ostream& os, DataMap& kv) const {
     }
 }
 
+NodeType IfValue::type() const
+{
+    return NodeType::IfValue;
+}
+
 bool IfValue::isValidTag(const std::string &tagName) const {
     if(tagName.empty()) {
         return false;
@@ -119,15 +178,30 @@ std::unique_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
     }
 
     in.erase(0, 2);
+    in.erase(in.find('}'));
+    in = mylib::trim(in);
+
     const auto arr_pos = in.find('[');
+    int arr_idx = -1;
     if(arr_pos != std::string::npos) {
+        // Contains: [0]
+        const auto arr = in.substr(arr_pos);
+        if(!mylib::starts_with(arr, "[") || !mylib::ends_with(arr, "]")) {
+            throw templet::exception::InvalidTagError("Invalid array access format: " + in);
+        }
+        // Contains: 0
+        const auto raw_number = arr.substr(1, arr.size() - 2);
+        const bool is_number = parseNumber(raw_number, arr_idx);
+        if(!is_number) {
+            throw templet::exception::InvalidTagError("Invalid array access format: " + in);
+        }
+        if(arr_idx < 0) {
+            throw templet::exception::InvalidTagError("Array access must not be negative: " + in);
+        }
         in.erase(arr_pos);
     }
-    else {
-        in.erase(in.find('}'));
-    }
-    in = mylib::trim(in);
-    return mylib::make_unique<Value>(std::move(in));
+
+    return mylib::make_unique<Value>(std::move(in), arr_idx);
 }
 
 std::unique_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
