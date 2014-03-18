@@ -39,6 +39,10 @@ const DataVector& Data::getList() const {
     throw std::runtime_error("Data item is not of type list");
 }
 
+const DataMap&Data::getMap() const {
+    throw std::runtime_error("Data item is not of type map");
+}
+
 DataType Data::type() const {
     return DataType::Invalid;
 }
@@ -82,4 +86,21 @@ const DataVector& DataList::getList() const {
 
 DataType DataList::type() const {
     return DataType::List;
+}
+
+
+DataMapper::DataMapper(DataMap&& data) : _data(std::move(data)) {
+
+}
+
+bool DataMapper::empty() const {
+    return _data.empty();
+}
+
+const DataMap& DataMapper::getMap() const {
+    return _data;
+}
+
+DataType DataMapper::type() const {
+    return DataType::Mapper;
 }

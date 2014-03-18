@@ -27,6 +27,7 @@ THE SOFTWARE.
 #ifndef NODES_HPP
 #define NODES_HPP
 
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -39,6 +40,12 @@ class InvalidTagError : public std::runtime_error {
 public:
     InvalidTagError(const char* reason) : std::runtime_error(reason) {}
     InvalidTagError(const std::string& reason) : std::runtime_error(reason) {}
+};
+
+class MissingTagError : public std::runtime_error {
+public:
+    MissingTagError(const char* reason) : std::runtime_error(reason) {}
+    MissingTagError(const std::string& reason) : std::runtime_error(reason) {}
 };
 
 } // namespace exception
@@ -72,7 +79,7 @@ public:
     /**
      * @brief Evaluates the Node and outputs the computed value in ostream os
      */
-    virtual void evaluate(std::ostream& /*os*/, DataMap& /*kv*/) const = 0;
+    virtual void evaluate(std::ostream& /*os*/, const DataMap& /*kv*/) const = 0;
 
     virtual NodeType type() const;
 };
@@ -93,7 +100,7 @@ public:
      */
     Text(std::string text);
 
-    void evaluate(std::ostream& os, DataMap& /*kv*/) const override;
+    void evaluate(std::ostream& os, const DataMap& /*kv*/) const override;
 
     NodeType type() const override;
 };
@@ -133,7 +140,7 @@ public:
 
     Value(std::string name, int idx);
 
-    void evaluate(std::ostream& os, DataMap& kv) const override;
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
 
     NodeType type() const override;
 };
@@ -173,7 +180,7 @@ public:
 
     void setChildren(std::vector<std::unique_ptr<Node>>&& children) override;
 
-    void evaluate(std::ostream& os, DataMap& kv) const override;
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
 
     NodeType type() const override;
 };

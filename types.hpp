@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include <vector>
 #include "ptrutil.hpp"
 
+// TODO: Add conversion operators to data classes
+
 namespace templet {
 namespace types {
 
@@ -45,7 +47,8 @@ using DataMap = std::map<std::string, DataPtr>;
 enum class DataType {
     Invalid,
     String,
-    List
+    List,
+    Mapper
 };
 
 /**
@@ -77,6 +80,13 @@ public:
      * @return List of values as a vector
      */
     virtual const DataVector& getList() const;
+
+    /**
+     * @brief Get map values from object
+     * @exception std::runtime_error if the derived class doesn't support this type
+     * @return Map values
+     */
+    virtual const DataMap& getMap() const;
 
     virtual DataType type() const;
 };
@@ -113,11 +123,35 @@ public:
      */
     DataList(DataVector&& data);
 
-
+    /**
+     * @brief Construct a Datalist with an initializer list of strings
+     * @param items Initializer list
+     */
     DataList(std::initializer_list<std::string>&& items);
 
     bool empty() const override;
     const DataVector& getList() const override;
+    DataType type() const override;
+};
+
+/**
+ * @brief The DataMapper class wraps a map
+ */
+class DataMapper : public Data {
+private:
+    DataMap _data;
+
+public:
+    /**
+     * @brief Construct a DataMapper with a map
+     * @param data Map
+     */
+    DataMapper(DataMap&& data);
+
+    // TODO: Add initializer list constructor
+
+    bool empty() const override;
+    const DataMap& getMap() const override;
     DataType type() const override;
 };
 
@@ -169,6 +203,10 @@ static types::DataPtr make_data(std::vector<std::string> value) {
  */
 static types::DataPtr make_data(std::initializer_list<std::string> value) {
     return ::mylib::make_unique<types::DataList>(std::move(value));
+}
+
+static types::DataPtr make_data(types::DataMap&& value) {
+    return ::mylib::make_unique<types::DataMapper>(std::move(value));
 }
 
 } // namespace templet
