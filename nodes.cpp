@@ -152,6 +152,9 @@ const templet::types::DataPtr& parse_tag(std::string name, const DataMap& kv) {
                     return data.at(idx);
                 }
                 // Array indexing on strings
+                else {
+                    throw templet::exception::InvalidTagError("Only lists are supported by array indexes");
+                }
 //                else if(dataValue->type() == templet::types::DataType::String) {
 //                    // Access character in a string
 //                    const auto& data = dataValue->getValue();
@@ -262,7 +265,8 @@ void Value::evaluate(std::ostream& os, const DataMap& kv) const {
         os << parse_tag_string(_name, kv);
     }
     catch(const templet::exception::MissingTagError& ex) {
-        // Default behavior is to just ignore it
+        // Default behavior is to just ignore it, effectively
+        // just removing the tag name from the output
         // TODO: Add user config option to re-throw
     }
     catch(...) {
