@@ -284,7 +284,7 @@ bool Value::isValidTag(const std::string& tagName) const {
     }
 
     // Tag names may only contain a-zA-Z0-9_-
-    auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
+    const auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
                                                 (c >= 'A' && c <= 'Z') ||
                                                 (c >= '0' && c <= '9') ||
                                                 (c == '_' || c == '-' || c == '.' ||
@@ -323,7 +323,7 @@ bool IfValue::isValidTag(const std::string &tagName) const {
     }
 
     // Tag names may only contain a-zA-Z0-9_-
-    auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
+    const auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
                                                 (c >= 'A' && c <= 'Z') ||
                                                 (c >= '0' && c <= '9') ||
                                                 (c == '_' || c == '-' || c == '.'); };
