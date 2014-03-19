@@ -221,7 +221,7 @@ const templet::types::DataVector& parse_tag_list(std::string name, const DataMap
     return res->getList();
 }
 
-}
+} // unnamed namespace
 
 void Node::setChildren(std::vector<std::unique_ptr<Node>>&&) {
     throw std::runtime_error("This Node type cannot have children");
