@@ -128,6 +128,12 @@ std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) try {
                 node->setChildren(tokenize(in));
                 nodes.push_back(std::move(node));
             }
+            else if(mylib::starts_with(inner, "for")) {
+                auto node = ::templet::nodes::parse_forvalue_tag(tag);
+                in.substr(tag.size()).swap(in);
+                node->setChildren(tokenize(in));
+                nodes.push_back(std::move(node));
+            }
             else {
                 throw templet::exception::InvalidTagError("Unrecognized tag: " + tag);
             }

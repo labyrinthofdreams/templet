@@ -48,6 +48,12 @@ public:
     MissingTagError(const std::string& reason) : std::runtime_error(reason) {}
 };
 
+class ExpressionSyntaxError : public std::runtime_error {
+public:
+    ExpressionSyntaxError(const char* reason) : std::runtime_error(reason) {}
+    ExpressionSyntaxError(const std::string& reason) : std::runtime_error(reason) {}
+};
+
 } // namespace exception
 
 namespace nodes {
@@ -58,7 +64,8 @@ enum class NodeType {
     Invalid,
     Text,
     Value,
-    IfValue
+    IfValue,
+    ForValue
 };
 
 /**
@@ -186,6 +193,27 @@ public:
 };
 
 /**
+ * @brief The ForValue class represents a for statement block
+ *
+ * For statements can be used to traverse lists
+ */
+class ForValue : public Node {
+private:
+    std::string _name;
+    std::string _alias;
+    std::vector<std::unique_ptr<Node>> _nodes;
+
+public:
+    ForValue(std::string name, std::string alias);
+
+    void setChildren(std::vector<std::unique_ptr<Node>>&& children) override;
+
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
+
+    NodeType type() const override;
+};
+
+/**
  * @brief Parse a value tag
  *
  * Ex: {$first_name}
@@ -206,6 +234,17 @@ std::unique_ptr<Node> parse_value_tag(std::string in);
  * @return Parsed tag as unique pointer to IfValue node
  */
 std::unique_ptr<Node> parse_ifvalue_tag(std::string in);
+
+/**
+ * @brief Parse a for value tag
+ *
+ * Ex: {% for users as user %}{$ user }{% endfor %}
+ *
+ * @param in String to parse
+ * @exception templet::exception::InvalidTagError if invalid tag
+ * @return Parsed tag as unique pointer to ForValue node
+ */
+std::unique_ptr<Node> parse_forvalue_tag(std::string in);
 
 } // namespace nodes
 } // namespace templet

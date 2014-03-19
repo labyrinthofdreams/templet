@@ -330,6 +330,22 @@ bool IfValue::isValidTag(const std::string &tagName) const {
     return std::all_of(tagName.cbegin(), tagName.cend(), std::cref(validator));
 }
 
+ForValue::ForValue(std::string name, std::string alias)
+    : _name(std::move(name)), _alias(std::move(alias)), _nodes() {
+}
+
+void ForValue::setChildren(std::vector<std::unique_ptr<Node> >&& children) {
+    _nodes.swap(children);
+}
+
+void ForValue::evaluate(std::ostream& os, const templet::types::DataMap& kv) const {
+    const auto& evaluatedList = parse_tag_list(_name, kv);
+}
+
+NodeType ForValue::type() const {
+    return NodeType::ForValue;
+}
+
 std::unique_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
     if(!mylib::starts_with(in, "{$") || !mylib::ends_with(in, "}")) {
         throw templet::exception::InvalidTagError("Tag must be enclosed with {$ and }");
@@ -360,4 +376,26 @@ std::unique_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
     // TODO: Validate the variable name either via IfValue::is_valid_tag()
     // or in the IfValue constructor
     return mylib::make_unique<IfValue>(std::move(in));
+}
+
+
+std::unique_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
+{
+    if(!mylib::starts_with(in, "{%") || !mylib::ends_with(in, "%}")) {
+        throw templet::exception::InvalidTagError("Tag must be enclosed with {% and %}");
+    }
+
+    in.erase(0, 2);
+    in.erase(in.find('%'));
+    in = mylib::trim(in);
+    auto tokens = mylib::split(in, ' ');
+    if(tokens.size() != 4) {
+        throw templet::exception::ExpressionSyntaxError("For expressions must contain at least four tokens");
+    }
+
+    if(tokens[0] != "for" || tokens[2] != "as") {
+        throw templet::exception::ExpressionSyntaxError("Unrecognized for expression syntax");
+    }
+
+    return mylib::make_unique<ForValue>(tokens[1], tokens[3]);
 }
