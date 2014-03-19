@@ -63,6 +63,9 @@ std::string Templet::parse(DataMap &values) {
     catch(const templet::exception::InvalidTagError& ex) {
         throw;
     }
+    catch(const templet::exception::MissingTagError& ex) {
+        throw;
+    }
     catch(...) {
         throw;
     }
