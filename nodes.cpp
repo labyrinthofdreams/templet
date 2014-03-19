@@ -65,18 +65,14 @@ bool parse_number(const std::string& text, int& result) {
  */
 int parse_array_index(std::string in) {
     if(!mylib::starts_with(in, "[") || !mylib::ends_with(in, "]")) {
-        throw templet::exception::InvalidTagError("Invalid array access syntax: Value must be enclosed with []");
+        throw templet::exception::InvalidTagError("Invalid array syntax: Value must be enclosed with []");
     }
 
     int idx = 0;
     const auto raw_number = in.substr(1, in.size() - 2);
     const bool is_number = parse_number(raw_number, idx);
     if(!is_number) {
-        throw templet::exception::InvalidTagError("Invalid array access syntax: Value must be an integer");
-    }
-    else if(raw_number[0] == '-') {
-        // TODO: Maybe just remove this negative check from here and move it to e.g. parse_tag_name?
-        throw templet::exception::InvalidTagError("Invalid array index: Value must not be negative");
+        throw templet::exception::InvalidTagError("Invalid array index: Value must be an integer");
     }
 
     return idx;
@@ -88,17 +84,22 @@ int parse_array_index(std::string in) {
  * Given a string config[5] returns pair("config", 5)
  *
  * @param in Tag name to parse as a string
- * @exception templet::exception::InvalidTagError if parse_array_index throws
+ * @exception templet::exception::InvalidTagError if the index is negative
+ * or if parse_array_index throws
  * @return Tag name and index value as a pair
  */
 std::pair<std::string, int> parse_tag_name(std::string in) {
-    // TODO: Add name validation here?
+    // TODO: Add name validation here (e.g. checkibng final ])?
     const auto arr_pos = in.find('[');
-    int idx = -1;
-    if(arr_pos != std::string::npos) {
-        idx = parse_array_index(in.substr(arr_pos));
-        in.erase(arr_pos);
+    if(arr_pos == std::string::npos) {
+        return {std::move(in), -1};
     }
+
+    const int idx = parse_array_index(in.substr(arr_pos));
+    if(idx < 0) {
+        throw templet::exception::InvalidTagError("Invalid array index: Value must not be negative");
+    }
+    in.erase(arr_pos);
 
     return {std::move(in), idx};
 }
