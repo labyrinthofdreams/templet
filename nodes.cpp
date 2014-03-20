@@ -78,7 +78,7 @@ bool parse_number(const std::string& text, int& result) {
  *
  * Given a string like [5], returns 5
  *
- * Negative indexes are not allowed
+ * Negative indexes are allowed
  *
  * @param in String to parse
  * @exception templet::exception::InvalidTagError
