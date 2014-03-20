@@ -118,7 +118,14 @@ std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) try {
         }
         else if(tag[1] == '%') {
             const auto inner = mylib::ltrimmed(tag.substr(2));
+            // adding endif and endfor as nodes it would be possible
+            // to check whether an if/for node was closed properly
+            // and throw an exception if not
             if(mylib::starts_with(inner, "endif")) {
+                in.substr(tag.size()).swap(in);
+                break;
+            }
+            else if(mylib::starts_with(inner, "endfor")) {
                 in.substr(tag.size()).swap(in);
                 break;
             }
