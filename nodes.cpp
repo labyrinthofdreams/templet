@@ -41,6 +41,28 @@ using namespace templet::nodes;
 
 namespace {
 
+bool isValidName(const std::string& name) {
+    const auto genericNameValidator = [](const char c){
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                (c >= '0' && c <= '9') || (c == '_' || c == '-');
+    };
+
+    return std::all_of(name.cbegin(), name.cend(), std::cref(genericNameValidator));
+}
+
+bool isValidNameExpression(const std::string& name) {
+    const auto specialNameValidator = [](const char c){
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                (c >= '0' && c <= '9') || (c == '_' || c == '-') ||
+                (c == '[' || c == ']' || c == '.');
+    };
+
+    const bool hasMultiDot = name.find("..") != std::string::npos;
+    const bool isValidSpecial = std::all_of(name.cbegin(), name.cend(), std::cref(specialNameValidator));
+
+    return isValidSpecial && !hasMultiDot;
+}
+
 /**
  * @brief Parse a string into a number
  * @param text String to parse
@@ -255,8 +277,8 @@ Value::Value(std::string name)
 
 Value::Value(std::string name, int idx)
     : Node(), _name(std::move(name)), _idx(idx) {
-    if(!isValidTag(_name)) {
-        throw templet::exception::InvalidTagError("Tag name must only contain a-zA-Z0-9_-.");
+    if(!isValidNameExpression(_name)) {
+        throw templet::exception::InvalidTagError("Variable tag name contains invalid characters");
     }
 }
 
@@ -278,24 +300,10 @@ NodeType Value::type() const {
     return NodeType::Value;
 }
 
-bool Value::isValidTag(const std::string& tagName) const {
-    if(tagName.empty()) {
-        return false;
-    }
-
-    // Tag names may only contain a-zA-Z0-9_-
-    const auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
-                                                (c >= 'A' && c <= 'Z') ||
-                                                (c >= '0' && c <= '9') ||
-                                                (c == '_' || c == '-' || c == '.' ||
-                                                 c == '[' || c == ']'); };
-    return std::all_of(tagName.cbegin(), tagName.cend(), std::cref(validator));
-}
-
 IfValue::IfValue(std::string name)
     : Node(), _name(std::move(name)), _nodes() {
-    if(!isValidTag(_name)) {
-        throw templet::exception::InvalidTagError("Tag name must only contain a-zA-Z0-9_-");
+    if(!isValidNameExpression(_name)) {
+        throw templet::exception::InvalidTagError("If expression tag name contains invalid characters");
     }
 }
 
@@ -317,24 +325,18 @@ NodeType IfValue::type() const
     return NodeType::IfValue;
 }
 
-bool IfValue::isValidTag(const std::string &tagName) const {
-    if(tagName.empty()) {
-        return false;
-    }
-
-    // Tag names may only contain a-zA-Z0-9_-
-    const auto validator = [](const char c){ return (c >= 'a' && c <= 'z') ||
-                                                (c >= 'A' && c <= 'Z') ||
-                                                (c >= '0' && c <= '9') ||
-                                                (c == '_' || c == '-' || c == '.'); };
-    return std::all_of(tagName.cbegin(), tagName.cend(), std::cref(validator));
-}
-
 ForValue::ForValue(std::string name, std::string alias)
     : _name(std::move(name)), _alias(std::move(alias)), _nodes() {
+    // Validate names
+    if(!isValidNameExpression(_name)) {
+        throw templet::exception::InvalidTagError("For expression first tag name contains invalid characters");
+    }
+    else if(!isValidName(_alias)) {
+        throw templet::exception::InvalidTagError("For expression second tag name contains invalid characters");
+    }
 }
 
-void ForValue::setChildren(std::vector<std::unique_ptr<Node> >&& children) {
+void ForValue::setChildren(std::vector<std::unique_ptr<Node>>&& children) {
     _nodes.swap(children);
 }
 

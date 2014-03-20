@@ -122,18 +122,6 @@ private:
     std::string _name;
     int _idx;
 
-    /**
-     * @brief Validate the value tag name
-     *
-     * Valid tag names may contain a-zA-Z0-9_-
-     *
-     * The dot (.) character is also allowed as a name separator
-     *
-     * @param tagName Name to validate
-     * @return True if valid, otherwise false
-     */
-    bool isValidTag(const std::string& tagName) const;
-
 public:
     /**
      * @brief Construct a value node with name
@@ -161,18 +149,6 @@ class IfValue : public Node {
 private:
     std::string _name;
     std::vector<std::unique_ptr<Node>> _nodes;
-
-    /**
-     * @brief Validate the if block node name
-     *
-     * Valid if block tag names may contain a-zA-Z0-9_-
-     *
-     * The dot (.) character is also allowed as a name separator
-     *
-     * @param tagName Name to validate
-     * @return True if valid, otherwise false
-     */
-    bool isValidTag(const std::string& tagName) const;
 
 public:
     /**
