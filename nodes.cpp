@@ -341,6 +341,18 @@ void ForValue::setChildren(std::vector<std::shared_ptr<Node>>&& children) {
 
 void ForValue::evaluate(std::ostream& os, const templet::types::DataMap& kv) const {
     const auto& evaluatedList = parse_tag_list(_name, kv);
+    if(kv.count(_alias)) {
+        throw templet::exception::InvalidTagError("For expression alias name collides with an existing name");
+    }
+    // In a for statement the map entries are copied
+    // and the 'as' values are added with the new name
+    templet::types::DataMap newValues = kv;
+    for(const auto& item : evaluatedList) {
+        newValues[_alias] = item;
+        for(auto& node : _nodes) {
+            node->evaluate(os, newValues);
+        }
+    }
 }
 
 NodeType ForValue::type() const {
