@@ -81,7 +81,7 @@ public:
      *
      * Throws if the derived node doesn't support children
      */
-    virtual void setChildren(std::vector<std::unique_ptr<Node>>&& /*newNodes*/);
+    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& /*newNodes*/);
 
     /**
      * @brief Evaluates the Node and outputs the computed value in ostream os
@@ -148,7 +148,7 @@ public:
 class IfValue : public Node {
 private:
     std::string _name;
-    std::vector<std::unique_ptr<Node>> _nodes;
+    std::vector<std::shared_ptr<Node>> _nodes;
 
 public:
     /**
@@ -161,7 +161,7 @@ public:
      */
     IfValue(std::string name);
 
-    void setChildren(std::vector<std::unique_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 
@@ -177,12 +177,12 @@ class ForValue : public Node {
 private:
     std::string _name;
     std::string _alias;
-    std::vector<std::unique_ptr<Node>> _nodes;
+    std::vector<std::shared_ptr<Node>> _nodes;
 
 public:
     ForValue(std::string name, std::string alias);
 
-    void setChildren(std::vector<std::unique_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 
@@ -198,7 +198,7 @@ public:
  * @exception templet::exception::InvalidTagError if invalid tag
  * @return Parsed tag as unique pointer to Value node
  */
-std::unique_ptr<Node> parse_value_tag(std::string in);
+std::shared_ptr<Node> parse_value_tag(std::string in);
 
 /**
  * @brief Parse an if value tag
@@ -209,7 +209,7 @@ std::unique_ptr<Node> parse_value_tag(std::string in);
  * @exception templet::exception::InvalidTagError if invalid tag
  * @return Parsed tag as unique pointer to IfValue node
  */
-std::unique_ptr<Node> parse_ifvalue_tag(std::string in);
+std::shared_ptr<Node> parse_ifvalue_tag(std::string in);
 
 /**
  * @brief Parse a for value tag
@@ -220,7 +220,7 @@ std::unique_ptr<Node> parse_ifvalue_tag(std::string in);
  * @exception templet::exception::InvalidTagError if invalid tag
  * @return Parsed tag as unique pointer to ForValue node
  */
-std::unique_ptr<Node> parse_forvalue_tag(std::string in);
+std::shared_ptr<Node> parse_forvalue_tag(std::string in);
 
 } // namespace nodes
 } // namespace templet

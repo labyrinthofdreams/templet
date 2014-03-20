@@ -25,15 +25,14 @@ THE SOFTWARE.
 */
 
 #include <algorithm>
+#include <memory>
 #include "nodes.hpp"
 #include "strutils.hpp"
-#include "ptrutil.hpp"
 #include "templet.hpp"
 #include "trim.hpp"
 
 using namespace templet;
 using namespace templet::nodes;
-using mylib::make_unique;
 
 Templet::Templet(std::string text)
     : _text(std::move(text)),
@@ -77,27 +76,27 @@ std::string Templet::result() const {
     return _parsed.str();
 }
 
-std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) try {
-    std::vector<std::unique_ptr<Node> > nodes;
+std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
+    std::vector<std::shared_ptr<Node> > nodes;
     while(!in.empty()) {
         // Parse TEXT until first TAG
         const auto pos = in.find('{');
         if(pos == std::string::npos) {
            if(!in.empty()) {
                // Plain text
-               nodes.push_back(make_unique<Text>(in));
+               nodes.push_back(std::make_shared<Text>(in));
                in.clear();
            }
            break;
         }
-        nodes.push_back(make_unique<Text>(in.substr(0, pos)));
+        nodes.push_back(std::make_shared<Text>(in.substr(0, pos)));
         in.substr(pos).swap(in);
 
         // Find where the tag ends
         const auto end_pos = in.find('}');
         if(end_pos == std::string::npos) {
            // Plain text
-           nodes.push_back(make_unique<Text>(in));
+           nodes.push_back(std::make_shared<Text>(in));
            in.clear();
            break;
         }
@@ -108,7 +107,7 @@ std::vector<std::unique_ptr<Node> > Templet::tokenize(std::string &in) try {
             // Ignored tag, remove the first \ after opening tag character
             auto new_tag = tag.substr(2);
             new_tag.insert(0, "{");
-            nodes.push_back(make_unique<Text>(new_tag));
+            nodes.push_back(std::make_shared<Text>(new_tag));
             in.substr(tag.size()).swap(in);
         }
         else if(tag[1] == '$') {

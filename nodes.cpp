@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include <stdexcept>
 #include <utility>
 #include "nodes.hpp"
-#include "ptrutil.hpp"
 #include "split.hpp"
 #include "strutils.hpp"
 #include "trim.hpp"
@@ -249,7 +248,7 @@ const templet::types::DataVector& parse_tag_list(std::string name, const DataMap
 
 } // unnamed namespace
 
-void Node::setChildren(std::vector<std::unique_ptr<Node>>&&) {
+void Node::setChildren(std::vector<std::shared_ptr<Node>>&&) {
     throw std::runtime_error("This Node type cannot have children");
 }
 
@@ -307,7 +306,7 @@ IfValue::IfValue(std::string name)
     }
 }
 
-void IfValue::setChildren(std::vector<std::unique_ptr<Node>>&& children) {
+void IfValue::setChildren(std::vector<std::shared_ptr<Node>>&& children) {
     _nodes.swap(children);
 }
 
@@ -336,7 +335,7 @@ ForValue::ForValue(std::string name, std::string alias)
     }
 }
 
-void ForValue::setChildren(std::vector<std::unique_ptr<Node>>&& children) {
+void ForValue::setChildren(std::vector<std::shared_ptr<Node>>&& children) {
     _nodes.swap(children);
 }
 
@@ -348,7 +347,7 @@ NodeType ForValue::type() const {
     return NodeType::ForValue;
 }
 
-std::unique_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
+std::shared_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
     if(!mylib::starts_with(in, "{$") || !mylib::ends_with(in, "}")) {
         throw templet::exception::InvalidTagError("Tag must be enclosed with {$ and }");
     }
@@ -358,10 +357,10 @@ std::unique_ptr<Node> templet::nodes::parse_value_tag(std::string in) {
     in.erase(in.find('}'));
     in = mylib::trim(in);
 
-    return mylib::make_unique<Value>(std::move(in));
+    return std::make_shared<Value>(std::move(in));
 }
 
-std::unique_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
+std::shared_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
     if(!mylib::starts_with(in, "{%") || !mylib::ends_with(in, "%}")) {
         throw templet::exception::InvalidTagError("Tag must be enclosed with {% and %}");
     }
@@ -377,11 +376,11 @@ std::unique_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
 
     // TODO: Validate the variable name either via IfValue::is_valid_tag()
     // or in the IfValue constructor
-    return mylib::make_unique<IfValue>(std::move(in));
+    return std::make_shared<IfValue>(std::move(in));
 }
 
 
-std::unique_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
+std::shared_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
 {
     if(!mylib::starts_with(in, "{%") || !mylib::ends_with(in, "%}")) {
         throw templet::exception::InvalidTagError("Tag must be enclosed with {% and %}");
@@ -399,5 +398,5 @@ std::unique_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
         throw templet::exception::ExpressionSyntaxError("Unrecognized for expression syntax");
     }
 
-    return mylib::make_unique<ForValue>(tokens[1], tokens[3]);
+    return std::make_shared<ForValue>(tokens[1], tokens[3]);
 }

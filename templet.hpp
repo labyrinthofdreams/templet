@@ -102,7 +102,7 @@ class Templet {
 private:
     std::string _text;
     std::stringstream _parsed;
-    std::vector<std::unique_ptr<nodes::Node>> _nodes;
+    std::vector<std::shared_ptr<nodes::Node>> _nodes;
 
     /**
      * @brief Reset internal state
@@ -116,7 +116,7 @@ private:
      * @exception std::exception for any stdlib exceptions
      * @return Vector of tokenized nodes
      */
-    std::vector<std::unique_ptr<nodes::Node>> tokenize(std::string &in);
+    std::vector<std::shared_ptr<nodes::Node>> tokenize(std::string &in);
 
 public:
     Templet() = default;

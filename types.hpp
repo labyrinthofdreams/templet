@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include <memory>
 #include <string>
 #include <vector>
-#include "ptrutil.hpp"
 
 // TODO: Add conversion operators to data classes
 
@@ -40,7 +39,7 @@ namespace templet {
 namespace types {
 
 class Data;
-using DataPtr = std::unique_ptr<Data>;
+using DataPtr = std::shared_ptr<Data>;
 using DataVector = std::vector<DataPtr>;
 using DataMap = std::map<std::string, DataPtr>;
 
@@ -168,7 +167,7 @@ using types::DataVector;
  * @return Value wrapped in DataPtr
  */
 static types::DataPtr make_data(std::string value) {
-    return ::mylib::make_unique<types::DataValue>(std::move(value));
+    return std::make_shared<types::DataValue>(std::move(value));
 }
 
 /**
@@ -180,7 +179,7 @@ static types::DataPtr make_data(std::string value) {
  * @return Value wrapped in DataPtr
  */
 static types::DataPtr make_data(types::DataVector&& value) {
-    return ::mylib::make_unique<types::DataList>(std::move(value));
+    return std::make_shared<types::DataList>(std::move(value));
 }
 
 /**
@@ -202,11 +201,11 @@ static types::DataPtr make_data(std::vector<std::string> value) {
  * @return Value wrapped in DataPtr
  */
 static types::DataPtr make_data(std::initializer_list<std::string> value) {
-    return ::mylib::make_unique<types::DataList>(std::move(value));
+    return std::make_shared<types::DataList>(std::move(value));
 }
 
 static types::DataPtr make_data(types::DataMap&& value) {
-    return ::mylib::make_unique<types::DataMapper>(std::move(value));
+    return std::make_shared<types::DataMapper>(std::move(value));
 }
 
 } // namespace templet
