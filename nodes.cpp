@@ -314,16 +314,18 @@ void IfValue::evaluate(std::ostream& os, const DataMap& kv) const {
     // Check that the IF condition is TRUE (it's enough that it's been set)
     if(kv.count(_name)) {
         for(auto& node : _nodes) {
-            if(node->type() == templet::nodes::NodeType::ElseValue) {
+            if(node->type() == templet::nodes::NodeType::ElifValue ||
+                    node->type() == templet::nodes::NodeType::ElseValue) {
                 break;
             }
             node->evaluate(os, kv);
         }
     }
     else {
-        // This method supports multiple else clauses
+        // Do Elif/else block
         for(auto& node : _nodes) {
-            if(node->type() == templet::nodes::NodeType::ElseValue) {
+            if(node->type() == templet::nodes::NodeType::ElifValue ||
+                    node->type() == templet::nodes::NodeType::ElseValue) {
                 node->evaluate(os, kv);
             }
         }
@@ -332,6 +334,15 @@ void IfValue::evaluate(std::ostream& os, const DataMap& kv) const {
 
 NodeType IfValue::type() const {
     return NodeType::IfValue;
+}
+
+ElifValue::ElifValue(std::string name)
+    : IfValue(std::move(name)) {
+
+}
+
+NodeType ElifValue::type() const {
+    return NodeType::ElifValue;
 }
 
 ElseValue::ElseValue() : _nodes() {
@@ -413,11 +424,30 @@ std::shared_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
         throw templet::exception::InvalidTagError("Tag must be prefixed with 'if '");
     }
 
-    in = mylib::ltrim(in.erase(0, 3));
+    in = mylib::ltrim(in.erase(0, in.find(' ') + 1));
 
     // TODO: Validate the variable name either via IfValue::is_valid_tag()
     // or in the IfValue constructor
     return std::make_shared<IfValue>(std::move(in));
+}
+
+std::shared_ptr<Node> templet::nodes::parse_elifvalue_tag(std::string in) {
+    if(!mylib::starts_with(in, "{%") || !mylib::ends_with(in, "%}")) {
+        throw templet::exception::InvalidTagError("Tag must be enclosed with {% and %}");
+    }
+
+    in.erase(0, 2);
+    in.erase(in.find('%'));
+    in = mylib::trim(in);
+    if(!mylib::starts_with(in, "elif ")) {
+        throw templet::exception::InvalidTagError("Tag must be prefixed with 'if '");
+    }
+
+    in = mylib::ltrim(in.erase(0, in.find(' ') + 1));
+
+    // TODO: Validate the variable name either via IfValue::is_valid_tag()
+    // or in the IfValue constructor
+    return std::make_shared<ElifValue>(std::move(in));
 }
 
 std::shared_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)

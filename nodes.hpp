@@ -65,6 +65,7 @@ enum class NodeType {
     Text,
     Value,
     IfValue,
+    ElifValue,
     ElseValue,
     ForValue
 };
@@ -147,7 +148,7 @@ public:
  * Conditional blocks can be omitted/included from the output
  */
 class IfValue : public Node {
-private:
+protected:
     std::string _name;
     std::vector<std::shared_ptr<Node>> _nodes;
 
@@ -165,6 +166,13 @@ public:
     virtual void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
     virtual void evaluate(std::ostream& os, const DataMap& kv) const override;
+
+    virtual NodeType type() const override;
+};
+
+class ElifValue : public IfValue {
+public:
+    ElifValue(std::string name);
 
     virtual NodeType type() const override;
 };
@@ -225,6 +233,8 @@ std::shared_ptr<Node> parse_value_tag(std::string in);
  * @return Parsed tag as unique pointer to IfValue node
  */
 std::shared_ptr<Node> parse_ifvalue_tag(std::string in);
+
+std::shared_ptr<Node> parse_elifvalue_tag(std::string in);
 
 /**
  * @brief Parse a for value tag
