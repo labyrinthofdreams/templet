@@ -314,15 +314,44 @@ void IfValue::evaluate(std::ostream& os, const DataMap& kv) const {
     // Check that the IF condition is TRUE (it's enough that it's been set)
     if(kv.count(_name)) {
         for(auto& node : _nodes) {
+            if(node->type() == templet::nodes::NodeType::ElseValue) {
+                break;
+            }
             node->evaluate(os, kv);
+        }
+    }
+    else {
+        // This method supports multiple else clauses
+        for(auto& node : _nodes) {
+            if(node->type() == templet::nodes::NodeType::ElseValue) {
+                node->evaluate(os, kv);
+            }
         }
     }
 }
 
-NodeType IfValue::type() const
-{
+NodeType IfValue::type() const {
     return NodeType::IfValue;
 }
+
+ElseValue::ElseValue() : _nodes() {
+
+}
+
+void ElseValue::setChildren(std::vector<std::shared_ptr<Node> >&& children) {
+    _nodes.swap(children);
+}
+
+void ElseValue::evaluate(std::ostream& os, const templet::types::DataMap& kv) const {
+    for(auto& node : _nodes) {
+        node->evaluate(os, kv);
+    }
+}
+
+NodeType ElseValue::type() const {
+    return NodeType::ElseValue;
+}
+
 
 ForValue::ForValue(std::string name, std::string alias)
     : _name(std::move(name)), _alias(std::move(alias)), _nodes() {
@@ -390,7 +419,6 @@ std::shared_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
     // or in the IfValue constructor
     return std::make_shared<IfValue>(std::move(in));
 }
-
 
 std::shared_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
 {

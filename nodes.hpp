@@ -65,6 +65,7 @@ enum class NodeType {
     Text,
     Value,
     IfValue,
+    ElseValue,
     ForValue
 };
 
@@ -161,11 +162,25 @@ public:
      */
     IfValue(std::string name);
 
-    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
-    void evaluate(std::ostream& os, const DataMap& kv) const override;
+    virtual void evaluate(std::ostream& os, const DataMap& kv) const override;
 
-    NodeType type() const override;
+    virtual NodeType type() const override;
+};
+
+class ElseValue : public Node {
+private:
+    std::vector<std::shared_ptr<Node>> _nodes;
+
+public:
+    ElseValue();
+
+    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+
+    virtual void evaluate(std::ostream& os, const DataMap& kv) const override;
+
+    virtual NodeType type() const override;
 };
 
 /**
