@@ -440,7 +440,7 @@ std::shared_ptr<Node> templet::nodes::parse_elifvalue_tag(std::string in) {
     in.erase(in.find('%'));
     in = mylib::trim(in);
     if(!mylib::starts_with(in, "elif ")) {
-        throw templet::exception::InvalidTagError("Tag must be prefixed with 'if '");
+        throw templet::exception::InvalidTagError("Tag must be prefixed with 'elif '");
     }
 
     in = mylib::ltrim(in.erase(0, in.find(' ') + 1));
