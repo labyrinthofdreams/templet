@@ -36,18 +36,29 @@ THE SOFTWARE.
 namespace templet {
 namespace exception {
 
+/**
+ * @brief The invalid tag error is a generic error type
+ */
 class InvalidTagError : public std::runtime_error {
 public:
     InvalidTagError(const char* reason) : std::runtime_error(reason) {}
     InvalidTagError(const std::string& reason) : std::runtime_error(reason) {}
 };
 
+/**
+ * @brief The missing tag error is thrown when a referenced name
+ * in a template tag is not found in the map of values
+ */
 class MissingTagError : public std::runtime_error {
 public:
     MissingTagError(const char* reason) : std::runtime_error(reason) {}
     MissingTagError(const std::string& reason) : std::runtime_error(reason) {}
 };
 
+/**
+ * @brief The expression syntax error is thrown when there's an error
+ * in parsing tag expressions (e.g. if, for)
+ */
 class ExpressionSyntaxError : public std::runtime_error {
 public:
     ExpressionSyntaxError(const char* reason) : std::runtime_error(reason) {}
@@ -60,14 +71,17 @@ namespace nodes {
 
 using ::templet::types::DataMap;
 
+/**
+ * @brief The NodeType enum describes what the node represents
+ */
 enum class NodeType {
-    Invalid,
-    Text,
-    Value,
-    IfValue,
-    ElifValue,
-    ElseValue,
-    ForValue
+    Invalid,    ///< Base Node class
+    Text,       ///< A text block
+    Value,      ///< A variable block
+    IfValue,    ///< An if block
+    ElifValue,  ///< An elif block
+    ElseValue,  ///< An else block
+    ForValue    ///< A for loop block
 };
 
 /**
