@@ -76,6 +76,7 @@ enum class NodeType {
 class Node {
 public:
     Node() = default;
+
     virtual ~Node() = default;
 
     /**
@@ -163,11 +164,11 @@ public:
      */
     IfValue(std::string name);
 
-    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
-    virtual void evaluate(std::ostream& os, const DataMap& kv) const override;
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
 
-    virtual NodeType type() const override;
+    NodeType type() const override;
 };
 
 class ElifValue : public IfValue {
@@ -184,11 +185,11 @@ private:
 public:
     ElseValue();
 
-    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
 
-    virtual void evaluate(std::ostream& os, const DataMap& kv) const override;
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
 
-    virtual NodeType type() const override;
+    NodeType type() const override;
 };
 
 /**
