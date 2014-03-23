@@ -461,7 +461,7 @@ std::shared_ptr<Node> templet::nodes::parse_forvalue_tag(std::string in)
     in = mylib::trim(in);
     auto tokens = mylib::split(in, ' ');
     if(tokens.size() != 4) {
-        throw templet::exception::ExpressionSyntaxError("For expressions must contain at least four tokens");
+        throw templet::exception::ExpressionSyntaxError("Unrecognized for expression syntax");
     }
 
     if(tokens[0] != "for" || tokens[2] != "as") {
