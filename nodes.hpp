@@ -184,6 +184,9 @@ public:
     NodeType type() const override;
 };
 
+/**
+ * @brief \sa IfValue
+ */
 class ElifValue : public IfValue {
 public:
     ElifValue(std::string name);
@@ -191,6 +194,10 @@ public:
     virtual NodeType type() const override;
 };
 
+/**
+ * @brief Else value evaluates its child nodes if
+ * previous if-elif nodes failed
+ */
 class ElseValue : public Node {
 private:
     std::vector<std::shared_ptr<Node>> _nodes;
@@ -233,7 +240,7 @@ public:
  *
  * @param in String to parse
  * @exception templet::exception::InvalidTagError if invalid tag
- * @return Parsed tag as unique pointer to Value node
+ * @return Parsed tag
  */
 std::shared_ptr<Node> parse_value_tag(std::string in);
 
@@ -248,6 +255,13 @@ std::shared_ptr<Node> parse_value_tag(std::string in);
  */
 std::shared_ptr<Node> parse_ifvalue_tag(std::string in);
 
+
+/**
+ * @brief \sa parse_ifvalue_tag
+ * @param in String to parse
+ * @exception templet::exception::InvalidTagError if invalid tag
+ * @return Parsed tag
+ */
 std::shared_ptr<Node> parse_elifvalue_tag(std::string in);
 
 /**
@@ -257,7 +271,7 @@ std::shared_ptr<Node> parse_elifvalue_tag(std::string in);
  *
  * @param in String to parse
  * @exception templet::exception::InvalidTagError if invalid tag
- * @return Parsed tag as unique pointer to ForValue node
+ * @return Parsed tag
  */
 std::shared_ptr<Node> parse_forvalue_tag(std::string in);
 
