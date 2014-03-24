@@ -34,6 +34,34 @@ THE SOFTWARE.
 using namespace templet;
 using namespace templet::nodes;
 
+namespace {
+
+/**
+ * @brief Return a node for a given tag
+ * @param tagName Name of the tag
+ * @param fromTag Complete tag to parse
+ * @return Parsed tag as a node
+ */
+std::shared_ptr<Node> factory_tag_parser(const std::string& tagName, const std::string& fromTag) {
+    if(mylib::starts_with(tagName, "if")) {
+        return templet::nodes::parse_ifvalue_tag(fromTag);
+    }
+    else if(mylib::starts_with(tagName, "elif")) {
+        return templet::nodes::parse_elifvalue_tag(fromTag);
+    }
+    else if(mylib::starts_with(tagName, "else")) {
+        return std::make_shared<templet::nodes::ElseValue>();
+    }
+    else if(mylib::starts_with(tagName, "for")) {
+        return templet::nodes::parse_forvalue_tag(fromTag);
+    }
+    else {
+        throw templet::exception::InvalidTagError("Unknown tag type: No parser available for this tag");
+    }
+}
+
+}
+
 Templet::Templet(std::string text)
     : _text(std::move(text)),
       _parsed(),
@@ -124,32 +152,11 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
                 in.substr(tag.size()).swap(in);
                 break;
             }
-            else if(mylib::starts_with(inner, "if")) {
-                auto node = ::templet::nodes::parse_ifvalue_tag(tag);
-                in.substr(tag.size()).swap(in);
-                node->setChildren(tokenize(in));
-                nodes.push_back(std::move(node));
-            }
-            else if(mylib::starts_with(inner, "elif")) {
-                auto node = ::templet::nodes::parse_elifvalue_tag(tag);
-                in.substr(tag.size()).swap(in);
-                node->setChildren(tokenize(in));
-                nodes.push_back(std::move(node));
-            }
-            else if(mylib::starts_with(inner, "else")) {
-                auto node = std::make_shared<ElseValue>();
-                in.substr(tag.size()).swap(in);
-                node->setChildren(tokenize(in));
-                nodes.push_back(std::move(node));
-            }
-            else if(mylib::starts_with(inner, "for")) {
-                auto node = ::templet::nodes::parse_forvalue_tag(tag);
-                in.substr(tag.size()).swap(in);
-                node->setChildren(tokenize(in));
-                nodes.push_back(std::move(node));
-            }
             else {
-                throw templet::exception::InvalidTagError("Unrecognized tag: " + tag);
+                auto node = factory_tag_parser(inner, tag);
+                in.substr(tag.size()).swap(in);
+                node->setChildren(tokenize(in));
+                nodes.push_back(std::move(node));
             }
         }
         else {
