@@ -122,13 +122,13 @@ public:
      * @brief Construct a DataList with a vector of values
      * @param data Vector of values
      */
-    DataList(DataVector&& data);
+    DataList(DataVector data);
 
     /**
      * @brief Construct a Datalist with an initializer list of strings
      * @param items Initializer list
      */
-    DataList(std::initializer_list<std::string>&& items);
+    DataList(std::initializer_list<std::string> items);
 
     bool empty() const override;
     const DataVector& getList() const override;
@@ -147,7 +147,7 @@ public:
      * @brief Construct a DataMapper with a map
      * @param data Map
      */
-    DataMapper(DataMap&& data);
+    DataMapper(DataMap data);
 
     // TODO: Add initializer list constructor
 

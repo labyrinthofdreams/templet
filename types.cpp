@@ -60,12 +60,12 @@ DataType DataValue::type() const {
     return DataType::String;
 }
 
-DataList::DataList(DataVector&& data)
+DataList::DataList(DataVector data)
     : _data(std::move(data)) {
 
 }
 
-DataList::DataList(std::initializer_list<std::string>&& items)
+DataList::DataList(std::initializer_list<std::string> items)
     : _data() {
     for(auto& item : items) {
         _data.push_back(make_data(std::move(item)));
@@ -85,7 +85,7 @@ DataType DataList::type() const {
 }
 
 
-DataMapper::DataMapper(DataMap&& data) : _data(std::move(data)) {
+DataMapper::DataMapper(DataMap data) : _data(std::move(data)) {
 
 }
 
