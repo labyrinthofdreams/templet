@@ -50,7 +50,7 @@ void Templet::setTemplate(std::string str) {
     reset();
 }
 
-std::string Templet::parse(DataMap &values) {
+std::string Templet::parse(const DataMap &values) {
     try {
         reset();
         auto copied = _text;

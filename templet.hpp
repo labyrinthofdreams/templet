@@ -163,7 +163,7 @@ public:
      * @exception templet::exception::InvalidTagError if the template contains an invalid tag
      * @return Parsed template as a string
      */
-    std::string parse(templet::DataMap& values);
+    std::string parse(const templet::DataMap& values);
 
     /**
      * @brief result
