@@ -43,6 +43,9 @@ using DataPtr = std::shared_ptr<Data>;
 using DataVector = std::vector<DataPtr>;
 using DataMap = std::map<std::string, DataPtr>;
 
+/**
+ * @brief Represents the type of a data object
+ */
 enum class DataType {
     String,
     List,
@@ -63,18 +66,14 @@ public:
 
     /**
      * @brief Get string value from object
-     *
-     * Throws if the derived class doesn't support this type
-     *
+     * @exception std::runtime_error if the derived class doesn't support this type
      * @return Value as a string
      */
     virtual std::string getValue() const;
 
     /**
      * @brief Get list of values from object
-     *
-     * Throws if the derived class doesn't support this type
-     *
+     * @exception std::runtime_error if the derived class doesn't support this type
      * @return List of values as a vector
      */
     virtual const DataVector& getList() const;
