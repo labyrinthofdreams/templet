@@ -356,7 +356,7 @@ NodeType ElseValue::type() const {
 
 
 ForValue::ForValue(std::string name, std::string alias)
-    : _name(std::move(name)), _alias(std::move(alias)), _nodes() {
+    : Node(), _name(std::move(name)), _alias(std::move(alias)), _nodes() {
     // Validate names
     if(!isValidNameExpression(_name)) {
         throw templet::exception::InvalidTagError("For expression first tag name contains invalid characters");
