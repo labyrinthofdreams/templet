@@ -96,7 +96,9 @@ public:
     /**
      * @brief Set child nodes for this node type
      *
-     * Throws if the derived node doesn't support children
+     * By-value parameter leaves the option for user to copy/move the children
+     *
+     * @exception std::runtime_error If called on a node that doesn't support children
      */
     virtual void setChildren(std::vector<std::shared_ptr<Node>> /*newNodes*/);
 
