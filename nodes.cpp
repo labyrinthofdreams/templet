@@ -340,10 +340,6 @@ NodeType ElifValue::type() const {
     return NodeType::ElifValue;
 }
 
-ElseValue::ElseValue() : _nodes() {
-
-}
-
 void ElseValue::setChildren(std::vector<std::shared_ptr<Node> > children) {
     _nodes.swap(children);
 }

@@ -196,7 +196,7 @@ private:
     std::vector<std::shared_ptr<Node>> _nodes;
 
 public:
-    ElseValue();
+    ElseValue() = default;
 
     void setChildren(std::vector<std::shared_ptr<Node>> children) override;
 
