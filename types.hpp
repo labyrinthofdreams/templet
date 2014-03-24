@@ -174,13 +174,10 @@ static types::DataPtr make_data(std::string value) {
 
 /**
  * @brief Wrap a DataVector in a DataPtr
- *
- * Note: This version will move the values from the DataVector
- *
  * @param value Vector to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(types::DataVector&& value) {
+static types::DataPtr make_data(types::DataVector value) {
     return std::make_shared<types::DataList>(std::move(value));
 }
 
@@ -206,7 +203,12 @@ static types::DataPtr make_data(std::initializer_list<std::string> value) {
     return std::make_shared<types::DataList>(std::move(value));
 }
 
-static types::DataPtr make_data(types::DataMap&& value) {
+/**
+ * @brief Wrap a DataMap in a DataPtr
+ * @param value DataMap to wrap
+ * @return Value wrapped in DataPtr
+ */
+static types::DataPtr make_data(types::DataMap value) {
     return std::make_shared<types::DataMapper>(std::move(value));
 }
 
