@@ -248,7 +248,7 @@ const templet::types::DataVector& parse_tag_list(std::string name, const DataMap
 
 } // unnamed namespace
 
-void Node::setChildren(std::vector<std::shared_ptr<Node>>&&) {
+void Node::setChildren(std::vector<std::shared_ptr<Node>> /*children*/) {
     throw std::runtime_error("This Node type cannot have children");
 }
 
@@ -306,7 +306,7 @@ IfValue::IfValue(std::string name)
     }
 }
 
-void IfValue::setChildren(std::vector<std::shared_ptr<Node>>&& children) {
+void IfValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
     _nodes.swap(children);
 }
 
@@ -349,7 +349,7 @@ ElseValue::ElseValue() : _nodes() {
 
 }
 
-void ElseValue::setChildren(std::vector<std::shared_ptr<Node> >&& children) {
+void ElseValue::setChildren(std::vector<std::shared_ptr<Node> > children) {
     _nodes.swap(children);
 }
 
@@ -375,7 +375,7 @@ ForValue::ForValue(std::string name, std::string alias)
     }
 }
 
-void ForValue::setChildren(std::vector<std::shared_ptr<Node>>&& children) {
+void ForValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
     _nodes.swap(children);
 }
 

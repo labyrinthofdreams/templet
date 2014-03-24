@@ -98,7 +98,7 @@ public:
      *
      * Throws if the derived node doesn't support children
      */
-    virtual void setChildren(std::vector<std::shared_ptr<Node>>&& /*newNodes*/);
+    virtual void setChildren(std::vector<std::shared_ptr<Node>> /*newNodes*/);
 
     /**
      * @brief Evaluates the Node and outputs the computed value in ostream os
@@ -178,7 +178,7 @@ public:
      */
     IfValue(std::string name);
 
-    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>> children) override;
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 
@@ -199,7 +199,7 @@ private:
 public:
     ElseValue();
 
-    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>> children) override;
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 
@@ -220,7 +220,7 @@ private:
 public:
     ForValue(std::string name, std::string alias);
 
-    void setChildren(std::vector<std::shared_ptr<Node>>&& children) override;
+    void setChildren(std::vector<std::shared_ptr<Node>> children) override;
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 
