@@ -257,7 +257,10 @@ std::shared_ptr<Node> parse_ifvalue_tag(std::string in);
 
 
 /**
- * @brief \sa parse_ifvalue_tag
+ * @brief Parse an elif value tag
+ *
+ * Ex: {% elif is_admin %}
+ *
  * @param in String to parse
  * @exception templet::exception::InvalidTagError if invalid tag
  * @return Parsed tag

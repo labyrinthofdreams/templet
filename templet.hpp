@@ -119,6 +119,9 @@ private:
     std::vector<std::shared_ptr<nodes::Node>> tokenize(std::string &in);
 
 public:
+    /**
+     * @brief Default empty constructor
+     */
     Templet() = default;
 
     /**
