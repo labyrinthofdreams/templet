@@ -43,10 +43,6 @@ const DataMap&Data::getMap() const {
     throw std::runtime_error("Data item is not of type map");
 }
 
-DataType Data::type() const {
-    return DataType::Invalid;
-}
-
 DataValue::DataValue(std::string value)
     : _value(std::move(value)) {
 

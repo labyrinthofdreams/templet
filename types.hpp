@@ -44,7 +44,6 @@ using DataVector = std::vector<DataPtr>;
 using DataMap = std::map<std::string, DataPtr>;
 
 enum class DataType {
-    Invalid,
     String,
     List,
     Mapper
@@ -87,7 +86,11 @@ public:
      */
     virtual const DataMap& getMap() const;
 
-    virtual DataType type() const;
+    /**
+     * @brief Get the type of the data object
+     * @return type as DataType
+     */
+    virtual DataType type() const = 0;
 };
 
 /**
