@@ -139,7 +139,6 @@ public:
 class Value : public Node {
 private:
     std::string _name;
-    int _idx;
 
 public:
     /**
@@ -151,8 +150,6 @@ public:
      * @exception Throws templet::exception::InvalidTagError if invalid tag name
      */
     Value(std::string name);
-
-    Value(std::string name, int idx);
 
     void evaluate(std::ostream& os, const DataMap& kv) const override;
 

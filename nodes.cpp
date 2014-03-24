@@ -270,12 +270,7 @@ NodeType Text::type() const {
 }
 
 Value::Value(std::string name)
-    : Value(std::move(name), -1) {
-
-}
-
-Value::Value(std::string name, int idx)
-    : Node(), _name(std::move(name)), _idx(idx) {
+    : Node(), _name(std::move(name)) {
     if(!isValidNameExpression(_name)) {
         throw templet::exception::InvalidTagError("Variable tag name contains invalid characters");
     }
