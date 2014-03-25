@@ -139,7 +139,7 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
             in.substr(tag.size()).swap(in);
         }
         else if(tag[1] == '$') {
-            auto node = ::templet::nodes::parse_value_tag(tag);
+            auto node = templet::nodes::parse_value_tag(tag);
             in.substr(tag.size()).swap(in);
             nodes.push_back(std::move(node));
         }
