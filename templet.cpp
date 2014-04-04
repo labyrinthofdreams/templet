@@ -118,7 +118,7 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
            break;
         }
         nodes.push_back(std::make_shared<Text>(in.substr(0, pos)));
-        in.substr(pos).swap(in);
+        in.erase(0, pos);
 
         // Find where the tag ends
         const auto end_pos = in.find('}');
@@ -136,11 +136,11 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
             auto new_tag = tag.substr(2);
             new_tag.insert(0, "{");
             nodes.push_back(std::make_shared<Text>(new_tag));
-            in.substr(tag.size()).swap(in);
+            in.erase(0, tag.size());
         }
         else if(tag[1] == '$') {
             auto node = templet::nodes::parse_value_tag(tag);
-            in.substr(tag.size()).swap(in);
+            in.erase(0, tag.size());
             nodes.push_back(std::move(node));
         }
         else if(tag[1] == '%') {
@@ -149,12 +149,12 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
             // to check whether an if/for node was closed properly
             // and throw an exception if not
             if(mylib::starts_with(inner, "endif") || mylib::starts_with(inner, "endfor")) {
-                in.substr(tag.size()).swap(in);
+                in.erase(0, tag.size());
                 break;
             }
             else {
                 auto node = factory_tag_parser(inner, tag);
-                in.substr(tag.size()).swap(in);
+                in.erase(0, tag.size());
                 node->setChildren(tokenize(in));
                 nodes.push_back(std::move(node));
             }
