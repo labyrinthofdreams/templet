@@ -1,5 +1,15 @@
-*.autosave
-*.user
-docs/
-gtest/
-tests/
+# Ignore all
+*
+# Whitelist
+!docs/
+!tests/
+!.gitignore
+!.gitmodules
+!Doxyfile
+!LICENSE.txt
+!README.md
+!*.cpp
+!*.hpp
+!tests/*.lua
+!tests/*.pro
+!tests/*.tpl
