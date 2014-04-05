@@ -466,6 +466,18 @@ TEST_F(TempletParserTest, ArrayAccessInvalidFormat) {
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
+TEST_F(TempletParserTest, ListsOfLists) {
+    auto a = make_data({"one", "two", "three"});
+    auto b = make_data({"four", "five", "six"});
+    DataVector ab;
+    ab.push_back(a);
+    ab.push_back(b);
+    map["items"] = make_data(std::move(ab));
+
+    tpl.setTemplate("{$ items[0][1] } {$ items[1][1] }");
+    EXPECT_EQ(tpl.parse(map), "two five");
+}
+
 /*TEST_F(TempletParserTest, ArrayAccessStrings) {
     tpl.setTemplate("String is: {$ item[0] }{$ item[1] }{$ item[2] }");
     map["item"] = make_data("foo");
