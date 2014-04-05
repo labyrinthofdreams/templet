@@ -39,7 +39,7 @@ const DataVector& Data::getList() const {
     throw std::runtime_error("Data item is not of type list");
 }
 
-const DataMap&Data::getMap() const {
+const DataMap& Data::getMap() const {
     throw std::runtime_error("Data item is not of type map");
 }
 
