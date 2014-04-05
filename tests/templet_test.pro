@@ -9,5 +9,5 @@ SOURCES += test_all.cpp ..\templet.cpp \
 
 INCLUDEPATH += ..\gtest\include ..\
 
-LIBS += -L..\gtest\build -llibgtest
+LIBS += -L..\templet\gtest\build -llibgtest
 
