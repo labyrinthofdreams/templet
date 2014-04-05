@@ -1,4 +1,5 @@
 *.autosave
 *.user
 docs/
+gtest/
 tests/
