@@ -391,6 +391,57 @@ TEST_F(TempletParserTest, IfInsideElse) {
     EXPECT_EQ(tpl.parse(map), "Release modeGravity");
 }
 
+TEST_F(TempletParserTest, IfDotNotation) {
+    DataMap data;
+    data["hostname"] = make_data("localhost");
+
+    DataMap server;
+    server["server"] = make_data(data);
+
+    map["config"] = make_data(server);
+    tpl.setTemplate("{% if config.server.hostname %}{$ config.server.hostname }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "localhost");
+
+    tpl.setTemplate("{% if config.server.ip %}{$ config.server.ip }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "");
+}
+
+TEST_F(TempletParserTest, IfDotNotationWithArrays) {
+    DataMap data;
+    data["hostname"] = make_data("localhost");
+
+    DataVector server_data;
+    server_data.push_back(make_data(data));
+
+    DataMap servers;
+    servers["servers"] = make_data(server_data);
+
+    map["config"] = make_data(servers);
+    tpl.setTemplate("{% if config.servers[0].hostname %}{$ config.server[0].hostname }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "localhost");
+
+    tpl.setTemplate("{% if config.servers[1].hostname %}{$ config.server[1].hostname }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "");
+}
+
+TEST_F(TempletParserTest, IfDotNotationWithArraysEndIndex) {
+    DataMap data;
+    data["hostnames"] = make_data({"localhost", "game-server"});
+
+    DataVector server_data;
+    server_data.push_back(make_data(data));
+
+    DataMap servers;
+    servers["servers"] = make_data(server_data);
+
+    map["config"] = make_data(servers);
+    tpl.setTemplate("{% if config.servers[0].hostnames[0] %}{$ config.servers[0].hostnames[0] }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "localhost");
+
+    tpl.setTemplate("{% if config.servers[0].hostnames[2] %}{$ config.servers[0].hostnames[2] }{% endif %}");
+    EXPECT_EQ(tpl.parse(map), "");
+}
+
 //
 // Technically if-elif-else bugs
 // Programmer's fault if they do this!
