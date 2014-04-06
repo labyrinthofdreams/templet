@@ -558,6 +558,19 @@ TEST_F(TempletParserTest, DotNotationValueArrayList) {
     EXPECT_EQ(tpl.parse(map), "server.ips[1] is: 192.168.101.2");
 }
 
+TEST_F(TempletParserTest, DotNotationValueArrayListWithoutName) {
+    DataMap config;
+    config["ips"] = make_data({"192.168.101.1", "192.168.101.2", "192.168.101.3"});
+
+    map["server"] = make_data(std::move(config));
+
+    tpl.setTemplate("server.ips[1] is: {$ server.[1] }");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+
+    tpl.setTemplate("server.ips[1] is: {$ .server.ips[1] }");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+}
+
 TEST_F(TempletParserTest, DotNotationValueArrayMap) {
     DataMap data;
     data["ips"] = make_data({"192.168.101.1", "192.168.101.2", "192.168.101.3"});
@@ -617,6 +630,23 @@ TEST_F(TempletParserTest, DotNotationValueMultiArray) {
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 
     tpl.setTemplate("config.servers.hostname[1] is: {$ config.servers.hostname[1] }");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+}
+
+TEST_F(TempletParserTest, DotNotationWithoutDots) {
+    DataMap data;
+    data["ips"] = make_data({"192.168.101.1", "192.168.101.2", "192.168.101.3"});
+    data["hostname"] = make_data("game-server.localhost");
+
+    DataVector servers;
+    servers.push_back(make_data(std::move(data)));
+
+    DataMap server;
+    server["servers"] = make_data(std::move(servers));
+
+    map["config"] = make_data(std::move(server));
+
+    tpl.setTemplate("config.servers[0]ips[1] is: {$ config.servers[0]ips[1] }");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
