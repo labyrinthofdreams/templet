@@ -134,84 +134,75 @@ std::pair<std::string, int> parse_tag_name(std::string in) {
  * @param kv Map of values to reference
  * @exception templet::exception::MissingTagError If tag is not found in kv
  * @exception templet::exception::InvalidTagError
- * @return Const-ref to DataPtr of the parsed tag name
+ * @return DataPtr to the parsed tag value
  */
-const templet::types::DataPtr& parse_tag(std::string name, const DataMap& kv) {
+templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
+    // mapRef holds a reference to the current map level in dot notated tags
     auto mapRef = std::cref(kv);
-    while(true) {
+    // lastItem holds a pointer to the last evaluated value in the tag
+    templet::types::DataPtr lastItem;
+    while(!name.empty()) {
         const auto pos = name.find('.');
-        // Parse the first found tag name
-        const auto parsedName = parse_tag_name(name.substr(0, pos));
-        const auto& mapName = parsedName.first;
-        const auto& idx = parsedName.second;
+        // Parse the first found tag name which may contain [n]...[n]
+        const auto tag = name.substr(0, pos);
         if(pos == std::string::npos) {
             name.clear();
         }
         else {
             name.erase(0, pos + 1);
         }
-
+        const auto arrPos = tag.find('[');
+        // tagName contains the name before list indexing [n]...
+        const auto tagName = tag.substr(0, arrPos);
+        if(tagName.empty()) {
+            // This is true when e.g.:
+            // {$ config.[1] } {$ .username }
+            throw templet::exception::InvalidTagError("Tags must have a name" + tag);
+        }
         const auto& map = mapRef.get();
-        if(!map.count(mapName)) {
-            throw templet::exception::MissingTagError("Tag name not found");
+        if(!map.count(tagName)) {
+            throw templet::exception::MissingTagError("Tag name not found: " + tagName);
         }
-
-        if(name.empty()) {
-            // Retrieve the last tag
-            if(idx < 0) {
-                // Get DataPtr from map
-                return map.at(mapName);
+        lastItem = map.at(tagName);
+        // Parse the array index syntax
+        if(arrPos != std::string::npos) {
+            if(lastItem->type() != templet::types::DataType::List) {
+                throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
             }
-            else {
-                const auto& dataValue = map.at(mapName);
-                if(dataValue->type() == templet::types::DataType::List) {
-                    // Access item in a list
-                    const auto& data = dataValue->getList();
-                    if(idx >= data.size()) {
-                        throw templet::exception::InvalidTagError("Index out of range");
+            auto listRef = std::cref(lastItem->getList());
+            auto arr = tag.substr(arrPos);
+            while(!arr.empty()) {
+                const auto arrEndPos = arr.find(']');
+                const auto index = parse_array_index(arr.substr(0, arrEndPos + 1));
+                arr.erase(0, arrEndPos + 1);
+                if(index < 0 || index >= listRef.get().size()) {
+                    throw templet::exception::InvalidTagError("Array index out of bounds: " + tag);
+                }
+                lastItem = listRef.get().at(index);
+                if(lastItem->type() != templet::types::DataType::List) {
+                    // All elements accessed via the array index sequence [n]...[m]
+                    // must be lists, with the exception of the last element
+                    // which may be a string, a map, or a list
+                    if(arr.empty()) {
+                        break;
                     }
-                    return data.at(idx);
+                    throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
                 }
-                // Array indexing on strings
-                else {
-                    throw templet::exception::InvalidTagError("Only lists are supported by array indexes");
-                }
-//                else if(dataValue->type() == templet::types::DataType::String) {
-//                    // Access character in a string
-//                    const auto& data = dataValue->getValue();
-//                    if(idx >= data.size()) {
-//                        throw templet::exception::InvalidTagError("Index out of range");
-//                    }
-//                    return data.at(idx);
-//                }
+                listRef = std::cref(lastItem->getList());
             }
         }
-
-        // Note: This section applies only to names parsed before the last tag name
-        // Ex: config.server.hostname (valid for 'config' and 'server', not 'hostname')
-        // The found name may reference a direct map object (name)
-        // or map object in a list (name[idx])
-        const auto& found = map.at(mapName);
-        if(found->type() == templet::types::DataType::Mapper) {
-            mapRef = std::cref(found->getMap());
-        }
-        else if(found->type() == templet::types::DataType::List) {
-            const auto& data = found->getList();
-            if(idx >= data.size()) {
-                throw templet::exception::InvalidTagError("Index out of range");
+        // After the tag name has been parsed and evaluated, if the remaining
+        // tag name is not empty (implying dot notation), the last evaluated
+        // item must be a map value
+        if(!name.empty()) {
+            if(lastItem->type() != templet::types::DataType::Mapper) {
+                throw templet::exception::InvalidTagError("Dot notation can only be used on maps");
             }
 
-            const auto& listObj = data.at(idx);
-            // The found object in the list must be map
-            if(listObj->type() != templet::types::DataType::Mapper) {
-                throw templet::exception::InvalidTagError("Invalid index: Name does not match a map object");
-            }
-            mapRef = std::cref(listObj->getMap());
-        }
-        else {
-            throw templet::exception::InvalidTagError("Invalid index: Name does not match a map object");
+            mapRef = std::cref(lastItem->getMap());
         }
     }
+    return lastItem;
 }
 
 /**

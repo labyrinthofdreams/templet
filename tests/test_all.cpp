@@ -467,8 +467,8 @@ TEST_F(TempletParserTest, ArrayAccessInvalidFormat) {
 }
 
 TEST_F(TempletParserTest, ListsOfLists) {
-    auto a = make_data({"one", "two", "three"});
-    auto b = make_data({"four", "five", "six"});
+    DataPtr a = make_data({"one", "two", "three"});
+    DataPtr b = make_data({"four", "five", "six"});
     DataVector ab;
     ab.push_back(a);
     ab.push_back(b);
@@ -477,6 +477,7 @@ TEST_F(TempletParserTest, ListsOfLists) {
     tpl.setTemplate("{$ items[0][1] } {$ items[1][1] }");
     EXPECT_EQ(tpl.parse(map), "two five");
 }
+
 
 /*TEST_F(TempletParserTest, ArrayAccessStrings) {
     tpl.setTemplate("String is: {$ item[0] }{$ item[1] }{$ item[2] }");
@@ -689,6 +690,23 @@ TEST_F(TempletParserTest, ForLoopListArrayIndex) {
 
     tpl.setTemplate("Users: {% for users[0] as user %}{$ user },{% endfor %}");
     EXPECT_EQ(tpl.parse(map), "Users: John,Jane,");
+}
+
+TEST_F(TempletParserTest, ForLoopListArrayMultiIndex) {
+    DataVector users;
+    users.push_back(make_data({"John", "Jane"}));
+    users.push_back(make_data({"Mark", "Mary"}));
+
+    DataVector groups;
+    groups.push_back(make_data(users));
+
+    map["groups"] = make_data(std::move(groups));
+
+    tpl.setTemplate("Users: {% for groups[0][1] as user %}{$ user },{% endfor %}");
+    EXPECT_EQ(tpl.parse(map), "Users: Mark,Mary,");
+
+    tpl.setTemplate("Users: {% for groups[0] as user %}{$ user[0] },{% endfor %}");
+    EXPECT_EQ(tpl.parse(map), "Users: John,Mark,");
 }
 
 TEST_F(TempletParserTest, ForLoopInnerForLoop) {
