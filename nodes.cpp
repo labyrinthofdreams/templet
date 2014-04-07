@@ -408,8 +408,6 @@ std::shared_ptr<Node> templet::nodes::parse_ifvalue_tag(std::string in) {
 
     in = mylib::ltrim(in.erase(0, in.find(' ') + 1));
 
-    // TODO: Validate the variable name either via IfValue::is_valid_tag()
-    // or in the IfValue constructor
     return std::make_shared<IfValue>(std::move(in));
 }
 
@@ -427,8 +425,6 @@ std::shared_ptr<Node> templet::nodes::parse_elifvalue_tag(std::string in) {
 
     in = mylib::ltrim(in.erase(0, in.find(' ') + 1));
 
-    // TODO: Validate the variable name either via IfValue::is_valid_tag()
-    // or in the IfValue constructor
     return std::make_shared<ElifValue>(std::move(in));
 }
 
