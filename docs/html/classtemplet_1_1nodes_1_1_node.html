@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -104,26 +105,32 @@ Inheritance diagram for templet::nodes::Node:</div>
  <div class="center">
   <img src="classtemplet_1_1nodes_1_1_node.png" usemap="#templet::nodes::Node_map" alt=""/>
   <map id="templet::nodes::Node_map" name="templet::nodes::Node_map">
-<area href="classtemplet_1_1nodes_1_1_if_value.html" title="The IfValue class represents a conditional block in the template. " alt="templet::nodes::IfValue" shape="rect" coords="0,56,137,80"/>
-<area href="classtemplet_1_1nodes_1_1_text.html" title="The Text class represents a plain text block in the template. " alt="templet::nodes::Text" shape="rect" coords="147,56,284,80"/>
-<area href="classtemplet_1_1nodes_1_1_value.html" title="The Value class represents a variable in the template. " alt="templet::nodes::Value" shape="rect" coords="294,56,431,80"/>
+<area href="classtemplet_1_1nodes_1_1_else_value.html" title="Else value evaluates its child nodes if previous if-elif nodes failed. " alt="templet::nodes::ElseValue" shape="rect" coords="0,56,154,80"/>
+<area href="classtemplet_1_1nodes_1_1_for_value.html" title="The ForValue class represents a for statement block. " alt="templet::nodes::ForValue" shape="rect" coords="164,56,318,80"/>
+<area href="classtemplet_1_1nodes_1_1_if_value.html" title="The IfValue class represents a conditional block in the template. " alt="templet::nodes::IfValue" shape="rect" coords="328,56,482,80"/>
+<area href="classtemplet_1_1nodes_1_1_text.html" title="The Text class represents a plain text block in the template. " alt="templet::nodes::Text" shape="rect" coords="492,56,646,80"/>
+<area href="classtemplet_1_1nodes_1_1_value.html" title="The Value class represents a variable in the template. " alt="templet::nodes::Value" shape="rect" coords="656,56,810,80"/>
+<area href="classtemplet_1_1nodes_1_1_elif_value.html" alt="templet::nodes::ElifValue" shape="rect" coords="328,112,482,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a96e410924b30330782b9c4771e6b861e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#a96e410924b30330782b9c4771e6b861e">setChildren</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt; &amp;&amp;)</td></tr>
-<tr class="memdesc:a96e410924b30330782b9c4771e6b861e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set child nodes for this node type.  <a href="#a96e410924b30330782b9c4771e6b861e">More...</a><br/></td></tr>
-<tr class="separator:a96e410924b30330782b9c4771e6b861e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7238fff38c1a555b7adaf28a875a5f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7238fff38c1a555b7adaf28a875a5f3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#ab7238fff38c1a555b7adaf28a875a5f3">evaluate</a> (std::ostream &amp;, DataMap &amp;) const =0</td></tr>
-<tr class="memdesc:ab7238fff38c1a555b7adaf28a875a5f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the <a class="el" href="classtemplet_1_1nodes_1_1_node.html" title="The Node class represents a block from the template. ">Node</a> and outputs the computed value in ostream os. <br/></td></tr>
-<tr class="separator:ab7238fff38c1a555b7adaf28a875a5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb47422519369169955d5a344baeb160"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#aeb47422519369169955d5a344baeb160">setChildren</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt;)</td></tr>
+<tr class="memdesc:aeb47422519369169955d5a344baeb160"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set child nodes for this node type.  <a href="#aeb47422519369169955d5a344baeb160">More...</a><br/></td></tr>
+<tr class="separator:aeb47422519369169955d5a344baeb160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adad80133f06cc3018bfb500fbf64323a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adad80133f06cc3018bfb500fbf64323a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#adad80133f06cc3018bfb500fbf64323a">evaluate</a> (std::ostream &amp;, const DataMap &amp;) const =0</td></tr>
+<tr class="memdesc:adad80133f06cc3018bfb500fbf64323a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the <a class="el" href="classtemplet_1_1nodes_1_1_node.html" title="The Node class represents a block from the template. ">Node</a> and outputs the computed value in ostream os. <br/></td></tr>
+<tr class="separator:adad80133f06cc3018bfb500fbf64323a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6c4ded59a0005f39426c7092e8c304"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c6c4ded59a0005f39426c7092e8c304"></a>
+virtual NodeType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
+<tr class="separator:a8c6c4ded59a0005f39426c7092e8c304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classtemplet_1_1nodes_1_1_node.html" title="The Node class represents a block from the template. ">Node</a> class represents a block from the template. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a96e410924b30330782b9c4771e6b861e"></a>
+<a class="anchor" id="aeb47422519369169955d5a344baeb160"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -133,7 +140,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
         <tr>
           <td class="memname">void Node::setChildren </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt; &amp;&amp;&#160;</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -146,9 +153,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div><div class="memdoc">
 
 <p>Set child nodes for this node type. </p>
-<p>Throws if the derived node doesn't support children </p>
+<p>By-value parameter leaves the option for user to copy/move the children</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If called on a node that doesn't support children </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Reimplemented in <a class="el" href="classtemplet_1_1nodes_1_1_if_value.html#a7481262df1754c48d56ca7d306ab597c">templet::nodes::IfValue</a>.</p>
+<p>Reimplemented in <a class="el" href="classtemplet_1_1nodes_1_1_for_value.html#adcf936e100fc293066c1956c3b86a2a5">templet::nodes::ForValue</a>, <a class="el" href="classtemplet_1_1nodes_1_1_else_value.html#a86e01f41f8a0b9721ff8503bdb3c220b">templet::nodes::ElseValue</a>, and <a class="el" href="classtemplet_1_1nodes_1_1_if_value.html#a5116d716838d80b5e44e79b111f2b8f4">templet::nodes::IfValue</a>.</p>
 
 </div>
 </div>
@@ -159,7 +172,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

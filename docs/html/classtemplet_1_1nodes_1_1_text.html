@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,14 +114,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa2c070eaa884b1716f1b3713ea28f391"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_text.html#aa2c070eaa884b1716f1b3713ea28f391">Text</a> (std::string text)</td></tr>
 <tr class="memdesc:aa2c070eaa884b1716f1b3713ea28f391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a text node with text.  <a href="#aa2c070eaa884b1716f1b3713ea28f391">More...</a><br/></td></tr>
 <tr class="separator:aa2c070eaa884b1716f1b3713ea28f391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af38ed712d56b69cfbebd4489bd1f75d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af38ed712d56b69cfbebd4489bd1f75d9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_text.html#af38ed712d56b69cfbebd4489bd1f75d9">evaluate</a> (std::ostream &amp;os, DataMap &amp;) const override</td></tr>
-<tr class="memdesc:af38ed712d56b69cfbebd4489bd1f75d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the <a class="el" href="classtemplet_1_1nodes_1_1_node.html" title="The Node class represents a block from the template. ">Node</a> and outputs the computed value in ostream os. <br/></td></tr>
-<tr class="separator:af38ed712d56b69cfbebd4489bd1f75d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79195702f104c8437760ebb0856b9179"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79195702f104c8437760ebb0856b9179"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_text.html#a79195702f104c8437760ebb0856b9179">evaluate</a> (std::ostream &amp;os, const DataMap &amp;) const override</td></tr>
+<tr class="memdesc:a79195702f104c8437760ebb0856b9179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the <a class="el" href="classtemplet_1_1nodes_1_1_node.html" title="The Node class represents a block from the template. ">Node</a> and outputs the computed value in ostream os. <br/></td></tr>
+<tr class="separator:a79195702f104c8437760ebb0856b9179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c02f8a4fe0932b6e77c528c6d83f21e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c02f8a4fe0932b6e77c528c6d83f21e"></a>
+NodeType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const override</td></tr>
+<tr class="separator:a4c02f8a4fe0932b6e77c528c6d83f21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classtemplet_1_1nodes_1_1_node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classtemplet_1_1nodes_1_1_node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td></tr>
-<tr class="memitem:a96e410924b30330782b9c4771e6b861e inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#a96e410924b30330782b9c4771e6b861e">setChildren</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt; &amp;&amp;)</td></tr>
-<tr class="memdesc:a96e410924b30330782b9c4771e6b861e inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set child nodes for this node type.  <a href="#a96e410924b30330782b9c4771e6b861e">More...</a><br/></td></tr>
-<tr class="separator:a96e410924b30330782b9c4771e6b861e inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb47422519369169955d5a344baeb160 inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#aeb47422519369169955d5a344baeb160">setChildren</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classtemplet_1_1nodes_1_1_node.html">Node</a> &gt;&gt;)</td></tr>
+<tr class="memdesc:aeb47422519369169955d5a344baeb160 inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set child nodes for this node type.  <a href="#aeb47422519369169955d5a344baeb160">More...</a><br/></td></tr>
+<tr class="separator:aeb47422519369169955d5a344baeb160 inherit pub_methods_classtemplet_1_1nodes_1_1_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classtemplet_1_1nodes_1_1_text.html" title="The Text class represents a plain text block in the template. ">Text</a> class represents a plain text block in the template. </p>
@@ -156,7 +160,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

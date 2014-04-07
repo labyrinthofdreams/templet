@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -93,14 +94,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#ab7238fff38c1a555b7adaf28a875a5f3">evaluate</a>(std::ostream &amp;, DataMap &amp;) const =0</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#adad80133f06cc3018bfb500fbf64323a">evaluate</a>(std::ostream &amp;, const DataMap &amp;) const =0</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>Node</b>()=default (defined in <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a>)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#a96e410924b30330782b9c4771e6b861e">setChildren</a>(std::vector&lt; std::unique_ptr&lt; Node &gt;&gt; &amp;&amp;)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~Node</b>()=default (defined in <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a>)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html#aeb47422519369169955d5a344baeb160">setChildren</a>(std::vector&lt; std::shared_ptr&lt; Node &gt;&gt;)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>type</b>() const  (defined in <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a>)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>~Node</b>()=default (defined in <a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a>)</td><td class="entry"><a class="el" href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

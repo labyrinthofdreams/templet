@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['result',['result',['../classtemplet_1_1_templet.html#abf3226a607c2523b2cb20757b43f678d',1,'templet::Templet']]]
+  ['parse',['parse',['../classtemplet_1_1_templet.html#aa7c4bfd3b39061e71b83545ec81c0bff',1,'templet::Templet']]]
 ];

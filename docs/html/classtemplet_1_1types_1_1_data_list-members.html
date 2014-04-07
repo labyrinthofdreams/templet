@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -93,14 +94,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#a59a1f77c75de27a55e39a905756c7783">DataList</a>(DataVector &amp;&amp;data)</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#aec20719d365e3c13368e5691c0172cce">empty</a>() const override</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#a220485ce7ae9995dc2ecadaa3d9f85e2">getList</a>() const override</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#a17b48f8d0275838a4e1c2c09f3cd8a02">DataList</a>(DataVector data)</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#afeb178c69406df4cbbb1517fff89bcd7">DataList</a>(std::initializer_list&lt; std::string &gt; items)</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#aec20719d365e3c13368e5691c0172cce">empty</a>() const override</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#a220485ce7ae9995dc2ecadaa3d9f85e2">getList</a>() const override</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data.html#a986f11ad9726912ccbad859f81ec71ae">getMap</a>() const </td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data.html">templet::types::Data</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data.html#a7b5db2f2c2d04156fb5debd5806820af">getValue</a>() const </td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data.html">templet::types::Data</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html#aaaa87667b5361a1bb4c8a0f68a184360">type</a>() const override</td><td class="entry"><a class="el" href="classtemplet_1_1types_1_1_data_list.html">templet::types::DataList</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

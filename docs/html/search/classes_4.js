@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['templet',['Templet',['../classtemplet_1_1_templet.html',1,'templet']]],
-  ['text',['Text',['../classtemplet_1_1nodes_1_1_text.html',1,'templet::nodes']]]
+  ['missingtagerror',['MissingTagError',['../classtemplet_1_1exception_1_1_missing_tag_error.html',1,'templet::exception']]]
 ];

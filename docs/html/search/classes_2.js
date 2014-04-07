@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['ifvalue',['IfValue',['../classtemplet_1_1nodes_1_1_if_value.html',1,'templet::nodes']]],
-  ['is_5fws',['is_ws',['../structmylib_1_1is__ws.html',1,'mylib']]]
+  ['filereader',['FileReader',['../structtemplet_1_1helpers_1_1_file_reader.html',1,'templet::helpers']]],
+  ['filewriter',['FileWriter',['../structtemplet_1_1helpers_1_1_file_writer.html',1,'templet::helpers']]],
+  ['forvalue',['ForValue',['../classtemplet_1_1nodes_1_1_for_value.html',1,'templet::nodes']]]
 ];

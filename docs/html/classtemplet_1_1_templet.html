@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -101,19 +102,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a646e449a7b72f47fc8cf6ab536b13a50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a646e449a7b72f47fc8cf6ab536b13a50"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#a646e449a7b72f47fc8cf6ab536b13a50">Templet</a> ()=default</td></tr>
+<tr class="memdesc:a646e449a7b72f47fc8cf6ab536b13a50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default empty constructor. <br/></td></tr>
+<tr class="separator:a646e449a7b72f47fc8cf6ab536b13a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af64b4ee1756482bd22962b798db2a71b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#af64b4ee1756482bd22962b798db2a71b">Templet</a> (std::string text)</td></tr>
 <tr class="memdesc:af64b4ee1756482bd22962b798db2a71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classtemplet_1_1_templet.html" title="The Templet class parses templates. ">Templet</a> object with template text.  <a href="#af64b4ee1756482bd22962b798db2a71b">More...</a><br/></td></tr>
 <tr class="separator:af64b4ee1756482bd22962b798db2a71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d02a8b9a09bce55e5fc1c5ea8f713a"><td class="memTemplParams" colspan="2">template&lt;class FileWriterT  = helpers::FileWriter&gt; </td></tr>
+<tr class="memitem:ad2d02a8b9a09bce55e5fc1c5ea8f713a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#ad2d02a8b9a09bce55e5fc1c5ea8f713a">save</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:ad2d02a8b9a09bce55e5fc1c5ea8f713a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write parsed template to file.  <a href="#ad2d02a8b9a09bce55e5fc1c5ea8f713a">More...</a><br/></td></tr>
+<tr class="separator:ad2d02a8b9a09bce55e5fc1c5ea8f713a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ad3ca105a79a21f22fe371d4725d65f"><td class="memTemplParams" colspan="2">template&lt;class FileReaderT  = helpers::FileReader&gt; </td></tr>
 <tr class="memitem:a1ad3ca105a79a21f22fe371d4725d65f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#a1ad3ca105a79a21f22fe371d4725d65f">setTemplateFromFile</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:a1ad3ca105a79a21f22fe371d4725d65f"><td class="mdescLeft">&#160;</td><td class="mdescRight">readFromFile  <a href="#a1ad3ca105a79a21f22fe371d4725d65f">More...</a><br/></td></tr>
+<tr class="memdesc:a1ad3ca105a79a21f22fe371d4725d65f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set template from file.  <a href="#a1ad3ca105a79a21f22fe371d4725d65f">More...</a><br/></td></tr>
 <tr class="separator:a1ad3ca105a79a21f22fe371d4725d65f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61598c719ed3581ac7bbc1d99ed893ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#a61598c719ed3581ac7bbc1d99ed893ef">setTemplate</a> (std::string str)</td></tr>
-<tr class="memdesc:a61598c719ed3581ac7bbc1d99ed893ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">setTemplate  <a href="#a61598c719ed3581ac7bbc1d99ed893ef">More...</a><br/></td></tr>
+<tr class="memdesc:a61598c719ed3581ac7bbc1d99ed893ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set template from string.  <a href="#a61598c719ed3581ac7bbc1d99ed893ef">More...</a><br/></td></tr>
 <tr class="separator:a61598c719ed3581ac7bbc1d99ed893ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adece2ff62a787575f5d70b6da8f500f0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#adece2ff62a787575f5d70b6da8f500f0">parse</a> (templet::DataMap &amp;values)</td></tr>
-<tr class="memdesc:adece2ff62a787575f5d70b6da8f500f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">parse  <a href="#adece2ff62a787575f5d70b6da8f500f0">More...</a><br/></td></tr>
-<tr class="separator:adece2ff62a787575f5d70b6da8f500f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7c4bfd3b39061e71b83545ec81c0bff"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#aa7c4bfd3b39061e71b83545ec81c0bff">parse</a> (const templet::DataMap &amp;values)</td></tr>
+<tr class="memdesc:aa7c4bfd3b39061e71b83545ec81c0bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the template and return parsed result as a string.  <a href="#aa7c4bfd3b39061e71b83545ec81c0bff">More...</a><br/></td></tr>
+<tr class="separator:aa7c4bfd3b39061e71b83545ec81c0bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf3226a607c2523b2cb20757b43f678d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1_templet.html#abf3226a607c2523b2cb20757b43f678d">result</a> () const </td></tr>
 <tr class="memdesc:abf3226a607c2523b2cb20757b43f678d"><td class="mdescLeft">&#160;</td><td class="mdescRight">result  <a href="#abf3226a607c2523b2cb20757b43f678d">More...</a><br/></td></tr>
 <tr class="separator:abf3226a607c2523b2cb20757b43f678d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,26 +161,30 @@ std::cout &lt;&lt; tpl.parse(data); // Outputs: "Hello, John Doe!" </p>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="adece2ff62a787575f5d70b6da8f500f0"></a>
+<a class="anchor" id="aa7c4bfd3b39061e71b83545ec81c0bff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">std::string Templet::parse </td>
           <td>(</td>
-          <td class="paramtype">templet::DataMap &amp;&#160;</td>
+          <td class="paramtype">const templet::DataMap &amp;&#160;</td>
           <td class="paramname"><em>values</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>parse </p>
-<p>Parse the template and return parsed result as a string</p>
-<p>If the member function has already been called on the same template the old result is returned. Call <a class="el" href="classtemplet_1_1_templet.html#a61598c719ed3581ac7bbc1d99ed893ef">setTemplate</a> or <a class="el" href="classtemplet_1_1_templet.html#a1ad3ca105a79a21f22fe371d4725d65f">setTemplateFromFile</a> for the member function to re-parse the template.</p>
+<p>Parse the template and return parsed result as a string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">values</td><td>Map of key-value pairs for parsing the template </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classtemplet_1_1exception_1_1_invalid_tag_error.html" title="The invalid tag error is a generic error type. ">templet::exception::InvalidTagError</a></td><td>if the template contains an invalid tag </td></tr>
   </table>
   </dd>
 </dl>
@@ -197,6 +210,46 @@ std::cout &lt;&lt; tpl.parse(data); // Outputs: "Hello, John Doe!" </p>
 
 </div>
 </div>
+<a class="anchor" id="ad2d02a8b9a09bce55e5fc1c5ea8f713a"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class FileWriterT  = helpers::FileWriter&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void templet::Templet::save </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Write parsed template to file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path to file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if file can't be opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a61598c719ed3581ac7bbc1d99ed893ef"></a>
 <div class="memitem">
 <div class="memproto">
@@ -211,8 +264,7 @@ std::cout &lt;&lt; tpl.parse(data); // Outputs: "Hello, John Doe!" </p>
       </table>
 </div><div class="memdoc">
 
-<p>setTemplate </p>
-<p>Set template from string</p>
+<p>Set template from string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>Template string </td></tr>
@@ -246,12 +298,16 @@ template&lt;class FileReaderT  = helpers::FileReader&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>readFromFile </p>
-<p>Set template from file</p>
-<p>Throws if FileReaderT throws</p>
+<p>Set template from file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path to file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if file can't be opened </td></tr>
   </table>
   </dd>
 </dl>
@@ -265,7 +321,7 @@ template&lt;class FileReaderT  = helpers::FileReader&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,12 +118,39 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adfc0e5b66510f19c6e181e089b67690b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if data has been set.  <a href="#adfc0e5b66510f19c6e181e089b67690b">More...</a><br/></td></tr>
 <tr class="separator:adfc0e5b66510f19c6e181e089b67690b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862261230cee0c6e6aeb90265a4db134"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data_value.html#a862261230cee0c6e6aeb90265a4db134">getValue</a> () const override</td></tr>
-<tr class="memdesc:a862261230cee0c6e6aeb90265a4db134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get string value from object.  <a href="#a862261230cee0c6e6aeb90265a4db134">More...</a><br/></td></tr>
+<tr class="memdesc:a862261230cee0c6e6aeb90265a4db134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get string value from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#a862261230cee0c6e6aeb90265a4db134">More...</a><br/></td></tr>
 <tr class="separator:a862261230cee0c6e6aeb90265a4db134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4afe1677360d4e8a2dd7c3e2219ec5cc"><td class="memItemLeft" align="right" valign="top">DataType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data_value.html#a4afe1677360d4e8a2dd7c3e2219ec5cc">type</a> () const override</td></tr>
+<tr class="memdesc:a4afe1677360d4e8a2dd7c3e2219ec5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the data object.  <a href="#a4afe1677360d4e8a2dd7c3e2219ec5cc">More...</a><br/></td></tr>
+<tr class="separator:a4afe1677360d4e8a2dd7c3e2219ec5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classtemplet_1_1types_1_1_data"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classtemplet_1_1types_1_1_data')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classtemplet_1_1types_1_1_data.html">templet::types::Data</a></td></tr>
 <tr class="memitem:aa7cf6a1d679eda542a97d80f3fac6089 inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="memItemLeft" align="right" valign="top">virtual const DataVector &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#aa7cf6a1d679eda542a97d80f3fac6089">getList</a> () const </td></tr>
-<tr class="memdesc:aa7cf6a1d679eda542a97d80f3fac6089 inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get list of values from object.  <a href="#aa7cf6a1d679eda542a97d80f3fac6089">More...</a><br/></td></tr>
+<tr class="memdesc:aa7cf6a1d679eda542a97d80f3fac6089 inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get list of values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#aa7cf6a1d679eda542a97d80f3fac6089">More...</a><br/></td></tr>
 <tr class="separator:aa7cf6a1d679eda542a97d80f3fac6089 inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a986f11ad9726912ccbad859f81ec71ae inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="memItemLeft" align="right" valign="top">virtual const DataMap &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#a986f11ad9726912ccbad859f81ec71ae">getMap</a> () const </td></tr>
+<tr class="memdesc:a986f11ad9726912ccbad859f81ec71ae inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get map values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#a986f11ad9726912ccbad859f81ec71ae">More...</a><br/></td></tr>
+<tr class="separator:a986f11ad9726912ccbad859f81ec71ae inherit pub_methods_classtemplet_1_1types_1_1_data"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classtemplet_1_1types_1_1_data_value.html" title="The DataValue class wraps a string. ">DataValue</a> class wraps a string. </p>
@@ -201,11 +229,45 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get string value from object. </p>
-<p>Throws if the derived class doesn't support this type</p>
+<p>Get string value from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</p>
 <dl class="section return"><dt>Returns</dt><dd>Value as a string </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classtemplet_1_1types_1_1_data.html#a7b5db2f2c2d04156fb5debd5806820af">templet::types::Data</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4afe1677360d4e8a2dd7c3e2219ec5cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataType DataValue::type </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the type of the data object. </p>
+<dl class="section return"><dt>Returns</dt><dd>type as DataType </dd></dl>
+
+<p>Implements <a class="el" href="classtemplet_1_1types_1_1_data.html#a7853309a1d4a655d26100b99daadd734">templet::types::Data</a>.</p>
 
 </div>
 </div>
@@ -216,7 +278,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,81 +113,179 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef NODES_HPP</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define NODES_HPP</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;types.hpp&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>templet {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>nodes {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;using ::templet::types::DataMap;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_node.html">   43</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;types.hpp&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>templet {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>exception {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classtemplet_1_1exception_1_1_invalid_tag_error.html">   42</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1exception_1_1_invalid_tag_error.html">InvalidTagError</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_invalid_tag_error.html">InvalidTagError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_invalid_tag_error.html">InvalidTagError</a>(<span class="keyword">const</span> std::string&amp; reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html#a96e410924b30330782b9c4771e6b861e">setChildren</a>(std::vector&lt;std::unique_ptr&lt;Node&gt;&gt;&amp;&amp; <span class="comment">/*newNodes*/</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html#ab7238fff38c1a555b7adaf28a875a5f3">evaluate</a>(std::ostream&amp; <span class="comment">/*os*/</span>, DataMap&amp; <span class="comment">/*kv*/</span>) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_text.html">   64</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    std::string _in;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classtemplet_1_1exception_1_1_missing_tag_error.html">   52</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1exception_1_1_missing_tag_error.html">MissingTagError</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_missing_tag_error.html">MissingTagError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_missing_tag_error.html">MissingTagError</a>(<span class="keyword">const</span> std::string&amp; reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classtemplet_1_1exception_1_1_expression_syntax_error.html">   62</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1exception_1_1_expression_syntax_error.html">ExpressionSyntaxError</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_expression_syntax_error.html">ExpressionSyntaxError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="classtemplet_1_1exception_1_1_expression_syntax_error.html">ExpressionSyntaxError</a>(<span class="keyword">const</span> std::string&amp; reason) : std::runtime_error(reason) {}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;};</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a>(std::string text);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_text.html#af38ed712d56b69cfbebd4489bd1f75d9">evaluate</a>(std::ostream&amp; os, DataMap&amp; <span class="comment">/*kv*/</span>) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_value.html">   85</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_value.html">Value</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    std::string _name;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_value.html#af5d62da3f8c6cb46a5db0b304f624007">Value</a>(std::string name);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;} <span class="comment">// namespace exception</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">namespace </span>nodes {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;using ::templet::types::DataMap;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">enum class</span> NodeType {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    Invalid,    </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    Text,       </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    Value,      </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    IfValue,    </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    ElifValue,  </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    ElseValue,  </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    ForValue    </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_node.html">   90</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_value.html#a96ea47277c7d4d715a577afe4664c2ca">evaluate</a>(std::ostream&amp; os, DataMap&amp; kv) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;};</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_if_value.html">  104</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_if_value.html">IfValue</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    std::string _name;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std::vector&lt;std::unique_ptr&lt;Node&gt;&gt; _nodes;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#a3328b2c7427aa21a51127d3a38850443">IfValue</a>(std::string name);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#a7481262df1754c48d56ca7d306ab597c">setChildren</a>(std::vector&lt;std::unique_ptr&lt;Node&gt;&gt;&amp;&amp; children) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#a2b5fca8f2dc6e96c219b5d8ec3375f71">evaluate</a>(std::ostream&amp; os, DataMap&amp; kv) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;};</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;} <span class="comment">// namespace nodes</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;} <span class="comment">// namespace templet</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif // NODES_HPP</span></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html">templet::nodes::IfValue</a></div><div class="ttdoc">The IfValue class represents a conditional block in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:104</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_a3328b2c7427aa21a51127d3a38850443"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#a3328b2c7427aa21a51127d3a38850443">templet::nodes::IfValue::IfValue</a></div><div class="ttdeci">IfValue(std::string name)</div><div class="ttdoc">Construct a conditional if node with name. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:70</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></div><div class="ttdoc">The Node class represents a block from the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:43</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_text_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_text.html">templet::nodes::Text</a></div><div class="ttdoc">The Text class represents a plain text block in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:64</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html_a96ea47277c7d4d715a577afe4664c2ca"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html#a96ea47277c7d4d715a577afe4664c2ca">templet::nodes::Value::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:52</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_a7481262df1754c48d56ca7d306ab597c"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#a7481262df1754c48d56ca7d306ab597c">templet::nodes::IfValue::setChildren</a></div><div class="ttdeci">void setChildren(std::vector&lt; std::unique_ptr&lt; Node &gt;&gt; &amp;&amp;children) override</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:75</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html">templet::nodes::Value</a></div><div class="ttdoc">The Value class represents a variable in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:85</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_text_html_af38ed712d56b69cfbebd4489bd1f75d9"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_text.html#af38ed712d56b69cfbebd4489bd1f75d9">templet::nodes::Text::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, DataMap &amp;) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:43</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html_af5d62da3f8c6cb46a5db0b304f624007"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html#af5d62da3f8c6cb46a5db0b304f624007">templet::nodes::Value::Value</a></div><div class="ttdeci">Value(std::string name)</div><div class="ttdoc">Construct a value node with name. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:47</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html_a96e410924b30330782b9c4771e6b861e"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html#a96e410924b30330782b9c4771e6b861e">templet::nodes::Node::setChildren</a></div><div class="ttdeci">virtual void setChildren(std::vector&lt; std::unique_ptr&lt; Node &gt;&gt; &amp;&amp;)</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:34</div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html_ab7238fff38c1a555b7adaf28a875a5f3"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html#ab7238fff38c1a555b7adaf28a875a5f3">templet::nodes::Node::evaluate</a></div><div class="ttdeci">virtual void evaluate(std::ostream &amp;, DataMap &amp;) const =0</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div></div>
-<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_a2b5fca8f2dc6e96c219b5d8ec3375f71"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#a2b5fca8f2dc6e96c219b5d8ec3375f71">templet::nodes::IfValue::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:79</div></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html#aeb47422519369169955d5a344baeb160">setChildren</a>(std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; <span class="comment">/*newNodes*/</span>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html#adad80133f06cc3018bfb500fbf64323a">evaluate</a>(std::ostream&amp; <span class="comment">/*os*/</span>, <span class="keyword">const</span> DataMap&amp; <span class="comment">/*kv*/</span>) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">virtual</span> NodeType type() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_text.html">  116</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    std::string _in;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_text.html">Text</a>(std::string text);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_text.html#a79195702f104c8437760ebb0856b9179">evaluate</a>(std::ostream&amp; os, <span class="keyword">const</span> DataMap&amp; <span class="comment">/*kv*/</span>) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;};</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_value.html">  139</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_value.html">Value</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    std::string _name;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_value.html#af5d62da3f8c6cb46a5db0b304f624007">Value</a>(std::string name);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_value.html#a427f63c4081404ea08dd0ffcae9302e7">evaluate</a>(std::ostream&amp; os, <span class="keyword">const</span> DataMap&amp; kv) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;};</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_if_value.html">  164</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_if_value.html">IfValue</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    std::string _name;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; _nodes;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#a3328b2c7427aa21a51127d3a38850443">IfValue</a>(std::string name);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#a5116d716838d80b5e44e79b111f2b8f4">setChildren</a>(std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; children) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html#ae0e208a91ff2f1bae1e010c9d6c0e1ad">evaluate</a>(std::ostream&amp; os, <span class="keyword">const</span> DataMap&amp; kv) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;};</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_elif_value.html">  190</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_elif_value.html">ElifValue</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_if_value.html">IfValue</a> {</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_elif_value.html">ElifValue</a>(std::string name);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keyword">virtual</span> NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;};</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_else_value.html">  201</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_else_value.html">ElseValue</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; _nodes;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_else_value.html">ElseValue</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_else_value.html#a86e01f41f8a0b9721ff8503bdb3c220b">setChildren</a>(std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; children) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_else_value.html#a9193e083458dbe9b1d9f06a44eb46030">evaluate</a>(std::ostream&amp; os, <span class="keyword">const</span> DataMap&amp; kv) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;};</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classtemplet_1_1nodes_1_1_for_value.html">  220</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtemplet_1_1nodes_1_1_for_value.html">ForValue</a> : <span class="keyword">public</span> <a class="code" href="classtemplet_1_1nodes_1_1_node.html">Node</a> {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    std::string _name;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    std::string _alias;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; _nodes;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <a class="code" href="classtemplet_1_1nodes_1_1_for_value.html">ForValue</a>(std::string name, std::string alias);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_for_value.html#adcf936e100fc293066c1956c3b86a2a5">setChildren</a>(std::vector&lt;std::shared_ptr&lt;Node&gt;&gt; children) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtemplet_1_1nodes_1_1_for_value.html#a8801bb9492b0690aa8f1d42120878a57">evaluate</a>(std::ostream&amp; os, <span class="keyword">const</span> DataMap&amp; kv) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    NodeType type() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;};</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;std::shared_ptr&lt;Node&gt; parse_value_tag(std::string in);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;std::shared_ptr&lt;Node&gt; parse_ifvalue_tag(std::string in);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;std::shared_ptr&lt;Node&gt; parse_elifvalue_tag(std::string in);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;std::shared_ptr&lt;Node&gt; parse_forvalue_tag(std::string in);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;} <span class="comment">// namespace nodes</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;} <span class="comment">// namespace templet</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">#endif // NODES_HPP</span></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_for_value_html_adcf936e100fc293066c1956c3b86a2a5"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_for_value.html#adcf936e100fc293066c1956c3b86a2a5">templet::nodes::ForValue::setChildren</a></div><div class="ttdeci">void setChildren(std::vector&lt; std::shared_ptr&lt; Node &gt;&gt; children) override</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:372</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html">templet::nodes::IfValue</a></div><div class="ttdoc">The IfValue class represents a conditional block in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:164</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_for_value_html_a8801bb9492b0690aa8f1d42120878a57"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_for_value.html#a8801bb9492b0690aa8f1d42120878a57">templet::nodes::ForValue::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, const DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:376</div></div>
+<div class="ttc" id="classtemplet_1_1exception_1_1_missing_tag_error_html"><div class="ttname"><a href="classtemplet_1_1exception_1_1_missing_tag_error.html">templet::exception::MissingTagError</a></div><div class="ttdoc">The missing tag error is thrown when a referenced name in a template tag is not found in the map of v...</div><div class="ttdef"><b>Definition:</b> nodes.hpp:52</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_a5116d716838d80b5e44e79b111f2b8f4"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#a5116d716838d80b5e44e79b111f2b8f4">templet::nodes::IfValue::setChildren</a></div><div class="ttdeci">void setChildren(std::vector&lt; std::shared_ptr&lt; Node &gt;&gt; children) override</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:306</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_ae0e208a91ff2f1bae1e010c9d6c0e1ad"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#ae0e208a91ff2f1bae1e010c9d6c0e1ad">templet::nodes::IfValue::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, const DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:310</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_else_value_html_a9193e083458dbe9b1d9f06a44eb46030"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_else_value.html#a9193e083458dbe9b1d9f06a44eb46030">templet::nodes::ElseValue::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, const DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:350</div></div>
+<div class="ttc" id="classtemplet_1_1exception_1_1_invalid_tag_error_html"><div class="ttname"><a href="classtemplet_1_1exception_1_1_invalid_tag_error.html">templet::exception::InvalidTagError</a></div><div class="ttdoc">The invalid tag error is a generic error type. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:42</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_if_value_html_a3328b2c7427aa21a51127d3a38850443"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_if_value.html#a3328b2c7427aa21a51127d3a38850443">templet::nodes::IfValue::IfValue</a></div><div class="ttdeci">IfValue(std::string name)</div><div class="ttdoc">Construct an if block node with name. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:299</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html">templet::nodes::Node</a></div><div class="ttdoc">The Node class represents a block from the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:90</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_text_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_text.html">templet::nodes::Text</a></div><div class="ttdoc">The Text class represents a plain text block in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:116</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html_aeb47422519369169955d5a344baeb160"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html#aeb47422519369169955d5a344baeb160">templet::nodes::Node::setChildren</a></div><div class="ttdeci">virtual void setChildren(std::vector&lt; std::shared_ptr&lt; Node &gt;&gt;)</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:253</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html">templet::nodes::Value</a></div><div class="ttdoc">The Value class represents a variable in the template. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:139</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_text_html_a79195702f104c8437760ebb0856b9179"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_text.html#a79195702f104c8437760ebb0856b9179">templet::nodes::Text::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, const DataMap &amp;) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:266</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html_af5d62da3f8c6cb46a5db0b304f624007"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html#af5d62da3f8c6cb46a5db0b304f624007">templet::nodes::Value::Value</a></div><div class="ttdeci">Value(std::string name)</div><div class="ttdoc">Construct a value node with name. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:274</div></div>
+<div class="ttc" id="classtemplet_1_1exception_1_1_expression_syntax_error_html"><div class="ttname"><a href="classtemplet_1_1exception_1_1_expression_syntax_error.html">templet::exception::ExpressionSyntaxError</a></div><div class="ttdoc">The expression syntax error is thrown when there&#39;s an error in parsing tag expressions (e...</div><div class="ttdef"><b>Definition:</b> nodes.hpp:62</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_else_value_html_a86e01f41f8a0b9721ff8503bdb3c220b"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_else_value.html#a86e01f41f8a0b9721ff8503bdb3c220b">templet::nodes::ElseValue::setChildren</a></div><div class="ttdeci">void setChildren(std::vector&lt; std::shared_ptr&lt; Node &gt;&gt; children) override</div><div class="ttdoc">Set child nodes for this node type. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:346</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_node_html_adad80133f06cc3018bfb500fbf64323a"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_node.html#adad80133f06cc3018bfb500fbf64323a">templet::nodes::Node::evaluate</a></div><div class="ttdeci">virtual void evaluate(std::ostream &amp;, const DataMap &amp;) const =0</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_elif_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_elif_value.html">templet::nodes::ElifValue</a></div><div class="ttdef"><b>Definition:</b> nodes.hpp:190</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_else_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_else_value.html">templet::nodes::ElseValue</a></div><div class="ttdoc">Else value evaluates its child nodes if previous if-elif nodes failed. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:201</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_value_html_a427f63c4081404ea08dd0ffcae9302e7"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_value.html#a427f63c4081404ea08dd0ffcae9302e7">templet::nodes::Value::evaluate</a></div><div class="ttdeci">void evaluate(std::ostream &amp;os, const DataMap &amp;kv) const override</div><div class="ttdoc">Evaluates the Node and outputs the computed value in ostream os. </div><div class="ttdef"><b>Definition:</b> nodes.cpp:281</div></div>
+<div class="ttc" id="classtemplet_1_1nodes_1_1_for_value_html"><div class="ttname"><a href="classtemplet_1_1nodes_1_1_for_value.html">templet::nodes::ForValue</a></div><div class="ttdoc">The ForValue class represents a for statement block. </div><div class="ttdef"><b>Definition:</b> nodes.hpp:220</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

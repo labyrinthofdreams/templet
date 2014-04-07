@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -104,8 +105,9 @@ Inheritance diagram for templet::types::Data:</div>
  <div class="center">
   <img src="classtemplet_1_1types_1_1_data.png" usemap="#templet::types::Data_map" alt=""/>
   <map id="templet::types::Data_map" name="templet::types::Data_map">
-<area href="classtemplet_1_1types_1_1_data_list.html" title="The DataList class wraps a vector. " alt="templet::types::DataList" shape="rect" coords="0,56,152,80"/>
-<area href="classtemplet_1_1types_1_1_data_value.html" title="The DataValue class wraps a string. " alt="templet::types::DataValue" shape="rect" coords="162,56,314,80"/>
+<area href="classtemplet_1_1types_1_1_data_list.html" title="The DataList class wraps a vector. " alt="templet::types::DataList" shape="rect" coords="0,56,163,80"/>
+<area href="classtemplet_1_1types_1_1_data_mapper.html" title="The DataMapper class wraps a map. " alt="templet::types::DataMapper" shape="rect" coords="173,56,336,80"/>
+<area href="classtemplet_1_1types_1_1_data_value.html" title="The DataValue class wraps a string. " alt="templet::types::DataValue" shape="rect" coords="346,56,509,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -115,11 +117,38 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8345352db786e673e7265bef7fd98a75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if data has been set.  <a href="#a8345352db786e673e7265bef7fd98a75">More...</a><br/></td></tr>
 <tr class="separator:a8345352db786e673e7265bef7fd98a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b5db2f2c2d04156fb5debd5806820af"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#a7b5db2f2c2d04156fb5debd5806820af">getValue</a> () const </td></tr>
-<tr class="memdesc:a7b5db2f2c2d04156fb5debd5806820af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get string value from object.  <a href="#a7b5db2f2c2d04156fb5debd5806820af">More...</a><br/></td></tr>
+<tr class="memdesc:a7b5db2f2c2d04156fb5debd5806820af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get string value from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#a7b5db2f2c2d04156fb5debd5806820af">More...</a><br/></td></tr>
 <tr class="separator:a7b5db2f2c2d04156fb5debd5806820af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7cf6a1d679eda542a97d80f3fac6089"><td class="memItemLeft" align="right" valign="top">virtual const DataVector &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#aa7cf6a1d679eda542a97d80f3fac6089">getList</a> () const </td></tr>
-<tr class="memdesc:aa7cf6a1d679eda542a97d80f3fac6089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get list of values from object.  <a href="#aa7cf6a1d679eda542a97d80f3fac6089">More...</a><br/></td></tr>
+<tr class="memdesc:aa7cf6a1d679eda542a97d80f3fac6089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get list of values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#aa7cf6a1d679eda542a97d80f3fac6089">More...</a><br/></td></tr>
 <tr class="separator:aa7cf6a1d679eda542a97d80f3fac6089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a986f11ad9726912ccbad859f81ec71ae"><td class="memItemLeft" align="right" valign="top">virtual const DataMap &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#a986f11ad9726912ccbad859f81ec71ae">getMap</a> () const </td></tr>
+<tr class="memdesc:a986f11ad9726912ccbad859f81ec71ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get map values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+ <a href="#a986f11ad9726912ccbad859f81ec71ae">More...</a><br/></td></tr>
+<tr class="separator:a986f11ad9726912ccbad859f81ec71ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7853309a1d4a655d26100b99daadd734"><td class="memItemLeft" align="right" valign="top">virtual DataType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplet_1_1types_1_1_data.html#a7853309a1d4a655d26100b99daadd734">type</a> () const =0</td></tr>
+<tr class="memdesc:a7853309a1d4a655d26100b99daadd734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the data object.  <a href="#a7853309a1d4a655d26100b99daadd734">More...</a><br/></td></tr>
+<tr class="separator:a7853309a1d4a655d26100b99daadd734"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The base <a class="el" href="classtemplet_1_1types_1_1_data.html" title="The base Data class wraps user data in an interface that is compatible with the library. ">Data</a> class wraps user data in an interface that is compatible with the library. </p>
@@ -148,7 +177,7 @@ Public Member Functions</h2></td></tr>
 <p>Check if data has been set. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if data has been set, otherwise false </dd></dl>
 
-<p>Implemented in <a class="el" href="classtemplet_1_1types_1_1_data_list.html#aec20719d365e3c13368e5691c0172cce">templet::types::DataList</a>, and <a class="el" href="classtemplet_1_1types_1_1_data_value.html#adfc0e5b66510f19c6e181e089b67690b">templet::types::DataValue</a>.</p>
+<p>Implemented in <a class="el" href="classtemplet_1_1types_1_1_data_mapper.html#a5af4bd0cf86fe00335cf00c0c31845fe">templet::types::DataMapper</a>, <a class="el" href="classtemplet_1_1types_1_1_data_list.html#aec20719d365e3c13368e5691c0172cce">templet::types::DataList</a>, and <a class="el" href="classtemplet_1_1types_1_1_data_value.html#adfc0e5b66510f19c6e181e089b67690b">templet::types::DataValue</a>.</p>
 
 </div>
 </div>
@@ -173,11 +202,52 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get list of values from object. </p>
-<p>Throws if the derived class doesn't support this type</p>
+<p>Get list of values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</p>
 <dl class="section return"><dt>Returns</dt><dd>List of values as a vector </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classtemplet_1_1types_1_1_data_list.html#a220485ce7ae9995dc2ecadaa3d9f85e2">templet::types::DataList</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a986f11ad9726912ccbad859f81ec71ae"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const DataMap &amp; Data::getMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get map values from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</p>
+<dl class="section return"><dt>Returns</dt><dd>Map values </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classtemplet_1_1types_1_1_data_mapper.html#afbac105ac1a189f8b9272f1a52702eab">templet::types::DataMapper</a>.</p>
 
 </div>
 </div>
@@ -202,11 +272,45 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get string value from object. </p>
-<p>Throws if the derived class doesn't support this type</p>
+<p>Get string value from object </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the derived class doesn't support this type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</p>
 <dl class="section return"><dt>Returns</dt><dd>Value as a string </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classtemplet_1_1types_1_1_data_value.html#a862261230cee0c6e6aeb90265a4db134">templet::types::DataValue</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7853309a1d4a655d26100b99daadd734"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual DataType templet::types::Data::type </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the type of the data object. </p>
+<dl class="section return"><dt>Returns</dt><dd>type as DataType </dd></dl>
+
+<p>Implemented in <a class="el" href="classtemplet_1_1types_1_1_data_mapper.html#a51cb6ebde836229b533ab343c0d33ce3">templet::types::DataMapper</a>, <a class="el" href="classtemplet_1_1types_1_1_data_list.html#aaaa87667b5361a1bb4c8a0f68a184360">templet::types::DataList</a>, and <a class="el" href="classtemplet_1_1types_1_1_data_value.html#a4afe1677360d4e8a2dd7c3e2219ec5cc">templet::types::DataValue</a>.</p>
 
 </div>
 </div>
@@ -217,7 +321,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 20:04:32 for templet by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 7 2014 14:46:44 for templet by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

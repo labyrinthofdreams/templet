@@ -7,16 +7,18 @@
 
 var indexSectionsWithContent =
 {
-  0: "defginoprstv",
-  1: "dfintv",
-  2: "defgioprstv"
+  0: "defgimnoprstv",
+  1: "defimntv",
+  2: "defgioprstv",
+  3: "r"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "functions"
+  2: "functions",
+  3: "pages"
 };
 
 function convertToId(search)
