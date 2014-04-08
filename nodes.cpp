@@ -161,7 +161,9 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
         }
         const auto& map = mapRef.get();
         if(!map.count(tagName)) {
-            throw templet::exception::MissingTagError("Tag name not found: " + tagName);
+            //throw templet::exception::MissingTagError("Tag name not found: " + tagName);
+            lastItem.reset();
+            break;
         }
         lastItem = map.at(tagName);
         // Parse the array index syntax
@@ -176,7 +178,10 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
                 const auto index = parse_array_index(arr.substr(0, arrEndPos + 1));
                 arr.erase(0, arrEndPos + 1);
                 if(index < 0 || index >= listRef.get().size()) {
-                    throw templet::exception::InvalidTagError("Array index out of bounds: " + tag);
+                    //throw templet::exception::InvalidTagError("Array index out of bounds: " + tag);
+                    name.clear();
+                    lastItem.reset();
+                    break;
                 }
                 lastItem = listRef.get().at(index);
                 if(lastItem->type() != templet::types::DataType::List) {
@@ -212,9 +217,12 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
  * @exception templet::exception::InvalidTagError if result is not a string
  * @return Parsed result as a string
  */
-std::string parse_tag_string(std::string name, const DataMap& kv) {
-    const auto& res = parse_tag(std::move(name), kv);
-    if(res->type() != templet::types::DataType::String) {
+std::string parse_tag_string(const std::string& name, const DataMap& kv) {
+    const auto& res = parse_tag(name, kv);
+    if(!res) {
+            throw templet::exception::MissingTagError("Tag name not found: " + name);
+    }
+    else if(res->type() != templet::types::DataType::String) {
         throw templet::exception::InvalidTagError("Invalid tag name: Name must reference a string");
     }
 
@@ -228,9 +236,12 @@ std::string parse_tag_string(std::string name, const DataMap& kv) {
  * @exception templet::exception::InvalidTagError if result is not a vector
  * @return Parsed result as a vector
  */
-const templet::types::DataVector& parse_tag_list(std::string name, const DataMap& kv) {
-    const auto& res = parse_tag(std::move(name), kv);
-    if(res->type() != templet::types::DataType::List) {
+const templet::types::DataVector& parse_tag_list(const std::string& name, const DataMap& kv) {
+    const auto& res = parse_tag(name, kv);
+    if(!res) {
+            throw templet::exception::MissingTagError("Tag name not found: " + name);
+    }
+    else if(res->type() != templet::types::DataType::List) {
         throw templet::exception::InvalidTagError("Invalid tag name: Name must reference a list");
     }
 
@@ -298,7 +309,8 @@ void IfValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
 
 void IfValue::evaluate(std::ostream& os, const DataMap& kv) const {
     // Check that the IF condition is TRUE (it's enough that it's been set)
-    if(kv.count(_name)) {
+    auto parsed_tag = parse_tag(_name, kv);
+    if(parsed_tag) {
         for(auto& node : _nodes) {
             if(node->type() == templet::nodes::NodeType::ElifValue ||
                     node->type() == templet::nodes::NodeType::ElseValue) {

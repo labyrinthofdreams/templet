@@ -417,10 +417,10 @@ TEST_F(TempletParserTest, IfDotNotationWithArrays) {
     servers["servers"] = make_data(server_data);
 
     map["config"] = make_data(servers);
-    tpl.setTemplate("{% if config.servers[0].hostname %}{$ config.server[0].hostname }{% endif %}");
+    tpl.setTemplate("{% if config.servers[0].hostname %}{$ config.servers[0].hostname }{% endif %}");
     EXPECT_EQ(tpl.parse(map), "localhost");
 
-    tpl.setTemplate("{% if config.servers[1].hostname %}{$ config.server[1].hostname }{% endif %}");
+    tpl.setTemplate("{% if config.servers[1].hostname %}{$ config.servers[1].hostname }{% endif %}");
     EXPECT_EQ(tpl.parse(map), "");
 }
 
@@ -479,13 +479,13 @@ TEST_F(TempletParserTest, ArrayAccessIgnoreLeadingZero) {
 TEST_F(TempletParserTest, ArrayAccessOutOfRange) {
     tpl.setTemplate("Items in a list: {$ items[3] }");
     map["items"] = make_data({"first", "second", "third"});
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    EXPECT_EQ(tpl.parse(map), "Items in a list: ");
 }
 
 TEST_F(TempletParserTest, ArrayAccessOutOfRangeNegative) {
     tpl.setTemplate("Items in a list: {$ items[-1] }");
     map["items"] = make_data({"first", "second", "third"});
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    EXPECT_EQ(tpl.parse(map), "Items in a list: ");
 }
 
 TEST_F(TempletParserTest, ArrayAccessInvalidNumbers) {
