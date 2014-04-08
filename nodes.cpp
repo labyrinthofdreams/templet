@@ -157,7 +157,10 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
         if(tagName.empty()) {
             // This is true when e.g.:
             // {$ config.[1] } {$ .username }
-            throw templet::exception::InvalidTagError("Tags must have a name" + tag);
+            throw templet::exception::InvalidTagError("Tags must have a name: " + tag);
+        }
+        else if(!isValidName(tagName)) {
+            throw templet::exception::InvalidTagError("Invalid syntax: " + tag);
         }
         const auto& map = mapRef.get();
         if(!map.count(tagName)) {
@@ -169,7 +172,9 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
         // Parse the array index syntax
         if(arrPos != std::string::npos) {
             if(lastItem->type() != templet::types::DataType::List) {
-                throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
+                //throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
+                lastItem.reset();
+                break;
             }
             auto listRef = std::cref(lastItem->getList());
             auto arr = tag.substr(arrPos);
@@ -177,6 +182,10 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
                 const auto arrEndPos = arr.find(']');
                 const auto index = parse_array_index(arr.substr(0, arrEndPos + 1));
                 arr.erase(0, arrEndPos + 1);
+                if(!arr.empty() && arr.at(0) != '[') {
+                    // Valid e.g. for groups[0]users[1]
+                    throw templet::exception::InvalidTagError("Invalid syntax: " + tag);
+                }
                 if(index < 0 || index >= listRef.get().size()) {
                     //throw templet::exception::InvalidTagError("Array index out of bounds: " + tag);
                     name.clear();
@@ -191,7 +200,10 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
                     if(arr.empty()) {
                         break;
                     }
-                    throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
+                    //throw templet::exception::InvalidTagError("Array syntax can only be used to access elements in lists");
+                    name.clear();
+                    lastItem.reset();
+                    break;
                 }
                 listRef = std::cref(lastItem->getList());
             }

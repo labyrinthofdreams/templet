@@ -504,9 +504,6 @@ TEST_F(TempletParserTest, ArrayAccessInvalidFormat) {
     tpl.setTemplate("Items in a list: {$ items[[0]] }");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 
-    tpl.setTemplate("Items in a list: {$ items[0][0] }");
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
-
     tpl.setTemplate("Items in a list: {$ items[0 }");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 
@@ -515,6 +512,17 @@ TEST_F(TempletParserTest, ArrayAccessInvalidFormat) {
 
     tpl.setTemplate("Items in a list: {$ items[] }");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+}
+
+TEST_F(TempletParserTest, ArrayAccessString) {
+    map["item"] = make_data("hello world");
+    map["items"] = make_data({"first", "second", "third"});
+
+    tpl.setTemplate("{$ items[0][0] }");
+    EXPECT_EQ(tpl.parse(map), "");
+
+    tpl.setTemplate("{$ item[0] }");
+    EXPECT_EQ(tpl.parse(map), "");
 }
 
 TEST_F(TempletParserTest, ListsOfLists) {
@@ -678,7 +686,7 @@ TEST_F(TempletParserTest, DotNotationValueMultiArray) {
     EXPECT_EQ(tpl.parse(map), "config.server[1].hostname[1] is: ");
 
     tpl.setTemplate("config.servers[1].hostname[1] is: {$ config.servers[1].hostname[1] }");
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    EXPECT_EQ(tpl.parse(map), "config.servers[1].hostname[1] is: ");
 
     tpl.setTemplate("config.servers.hostname[1] is: {$ config.servers.hostname[1] }");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
