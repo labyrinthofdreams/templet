@@ -182,7 +182,7 @@ templet::types::DataPtr parse_tag(std::string name, const DataMap& kv) {
                 const auto arrEndPos = arr.find(']');
                 const auto index = parse_array_index(arr.substr(0, arrEndPos + 1));
                 arr.erase(0, arrEndPos + 1);
-                if(!arr.empty() && arr.at(0) != '[') {
+                if(!arr.empty() && arr[0] != '[') {
                     // Valid e.g. for groups[0]users[1]
                     throw templet::exception::InvalidTagError("Invalid syntax: " + tag);
                 }
