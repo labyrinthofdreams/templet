@@ -321,7 +321,7 @@ void IfValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
 
 void IfValue::evaluate(std::ostream& os, const DataMap& kv) const {
     // Check that the IF condition is TRUE (it's enough that it's been set)
-    auto parsed_tag = parse_tag(_name, kv);
+    const auto parsed_tag = parse_tag(_name, kv);
     if(parsed_tag) {
         for(auto& node : _nodes) {
             if(node->type() == templet::nodes::NodeType::ElifValue ||
