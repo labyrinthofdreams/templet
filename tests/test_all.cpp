@@ -122,10 +122,11 @@ TEST_F(TempletParserTest, Result) {
     EXPECT_EQ(tpl.result(), "hello world");
     EXPECT_EQ(tpl.result(), "hello world");
 
-    tpl.setTemplate("");
-    EXPECT_EQ(tpl.parse(map), "");
+    tpl.setTemplate("foo bar baz");
     EXPECT_EQ(tpl.result(), "");
-    EXPECT_EQ(tpl.result(), "");
+    EXPECT_EQ(tpl.parse(map), "foo bar baz");
+    EXPECT_EQ(tpl.result(), "foo bar baz");
+    EXPECT_EQ(tpl.result(), "foo bar baz");
 }
 
 TEST_F(TempletParserTest, ResultAfterInstantiation) {
