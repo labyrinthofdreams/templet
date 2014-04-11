@@ -40,6 +40,11 @@ using namespace templet::nodes;
 
 namespace {
 
+/**
+ * @brief Checks that a name contains valid characters
+ * @param name Name to check
+ * @return True if valid, otherwise false
+ */
 bool isValidName(const std::string& name) {
     static const auto genericNameValidator = [](const char c){
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
@@ -49,6 +54,11 @@ bool isValidName(const std::string& name) {
     return std::all_of(name.cbegin(), name.cend(), std::cref(genericNameValidator));
 }
 
+/**
+ * @brief Checks that a name expression contains valid characters
+ * @param name Name to check
+ * @return True if valid, otherwise false
+ */
 bool isValidNameExpression(const std::string& name) {
     static const auto specialNameValidator = [](const char c){
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
