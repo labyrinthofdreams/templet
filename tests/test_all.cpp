@@ -230,6 +230,11 @@ TEST_F(TempletParserTest, InvalidValueTagName) {
 
     tpl.setTemplate("{$foo bar}");
     ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+
+    // Special case where the string must be instantiated with
+    // the string constructor that accepts the length
+    tpl.setTemplate(std::string("{$foo\0&bar}", 11));
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
 TEST_F(TempletParserTest, ValidValueTagName) {
