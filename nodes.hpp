@@ -88,6 +88,9 @@ enum class NodeType {
  * @brief The Node class represents a block from the template
  */
 class Node {
+protected:
+    Node* _parent {nullptr};
+
 public:
     Node() = default;
 
@@ -108,6 +111,15 @@ public:
     virtual void evaluate(std::ostream& /*os*/, const DataMap& /*kv*/) const = 0;
 
     virtual NodeType type() const;
+
+    /**
+     * @brief Set the node's parent
+     *
+     * The parent does not own the node or vice versa
+     *
+     * @param parent Parent node
+     */
+    void setParent(Node* parent);
 };
 
 /**
@@ -190,6 +202,8 @@ public:
 class ElifValue : public IfValue {
 public:
     ElifValue(std::string name);
+
+    void evaluate(std::ostream& os, const DataMap& kv) const override;
 
     virtual NodeType type() const override;
 };

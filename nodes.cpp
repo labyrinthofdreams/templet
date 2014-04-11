@@ -270,6 +270,10 @@ NodeType Node::type() const {
     return NodeType::Invalid;
 }
 
+void Node::setParent(Node* parent) {
+    _parent = parent;
+}
+
 Text::Text(std::string text)
     : Node(), _in(std::move(text)) {
 
@@ -316,6 +320,9 @@ IfValue::IfValue(std::string name)
 }
 
 void IfValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
+    for(auto& child : children) {
+        child->setParent(this);
+    }
     _nodes.swap(children);
 }
 
@@ -351,15 +358,42 @@ ElifValue::ElifValue(std::string name)
 
 }
 
+void ElifValue::evaluate(std::ostream& os, const templet::types::DataMap& kv) const {
+    if(_parent == nullptr) {
+        throw templet::exception::InvalidTagError("ELIF statements cannot be declared without a preceding IF statement");
+    }
+
+    const bool hasValidParent = (_parent->type() == templet::nodes::NodeType::IfValue ||
+                                 _parent->type() == templet::nodes::NodeType::ElifValue);
+    if(!hasValidParent) {
+        throw templet::exception::InvalidTagError("ELIF statements cannot be declared without a preceding IF statement");
+    }
+
+    IfValue::evaluate(os, kv);
+}
+
 NodeType ElifValue::type() const {
     return NodeType::ElifValue;
 }
 
 void ElseValue::setChildren(std::vector<std::shared_ptr<Node> > children) {
+    for(auto& child : children) {
+        child->setParent(this);
+    }
     _nodes.swap(children);
 }
 
 void ElseValue::evaluate(std::ostream& os, const templet::types::DataMap& kv) const {
+    if(_parent == nullptr) {
+        throw templet::exception::InvalidTagError("ELSE statements cannot be declared without a preceding IF or ELIF statement");
+    }
+
+    const bool hasValidParent = (_parent->type() == templet::nodes::NodeType::IfValue ||
+                                 _parent->type() == templet::nodes::NodeType::ElifValue);
+    if(!hasValidParent) {
+        throw templet::exception::InvalidTagError("ELSE statements cannot be declared without a preceding IF or ELIF statement");
+    }
+
     for(auto& node : _nodes) {
         node->evaluate(os, kv);
     }
@@ -382,6 +416,9 @@ ForValue::ForValue(std::string name, std::string alias)
 }
 
 void ForValue::setChildren(std::vector<std::shared_ptr<Node>> children) {
+    for(auto& child : children) {
+        child->setParent(this);
+    }
     _nodes.swap(children);
 }
 

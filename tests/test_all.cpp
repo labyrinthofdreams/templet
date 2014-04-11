@@ -444,21 +444,17 @@ TEST_F(TempletParserTest, IfDotNotationWithArraysEndIndex) {
 }
 
 //
-// Technically if-elif-else bugs
-// Programmer's fault if they do this!
-// No discernible harm
+//  Test Elif-Else statements without preceding If/Elif statements
 //
 
 TEST_F(TempletParserTest, ElifWithoutIf) {
     tpl.setTemplate("{% elif debug %}Debug mode{% endif %}");
-
-    map["debug"] = make_data("true");
-    EXPECT_EQ(tpl.parse(map), "Debug mode");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
 TEST_F(TempletParserTest, ElseWithoutIfOrElif) {
     tpl.setTemplate("{% else %}Debug mode{% endif %}");
-    EXPECT_EQ(tpl.parse(map), "Debug mode");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
 //
