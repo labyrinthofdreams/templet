@@ -326,10 +326,7 @@ TEST_F(TempletParserTest, IfElseBlock) {
 
 TEST_F(TempletParserTest, IfElseBlockMultipleElses) {
     tpl.setTemplate("{% if debug %}Debug mode{% else %}Release mode{% else %}, not debug{% endif %}");
-    EXPECT_EQ(tpl.parse(map), "Release mode, not debug");
-
-    map["debug"] = make_data("true");
-    EXPECT_EQ(tpl.parse(map), "Debug mode");
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
 //
