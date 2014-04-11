@@ -41,7 +41,7 @@ using namespace templet::nodes;
 namespace {
 
 bool isValidName(const std::string& name) {
-    const auto genericNameValidator = [](const char c){
+    static const auto genericNameValidator = [](const char c){
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
                 (c >= '0' && c <= '9') || (c == '_' || c == '-');
     };
@@ -50,7 +50,7 @@ bool isValidName(const std::string& name) {
 }
 
 bool isValidNameExpression(const std::string& name) {
-    const auto specialNameValidator = [](const char c){
+    static const auto specialNameValidator = [](const char c){
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
                 (c >= '0' && c <= '9') || (c == '_' || c == '-') ||
                 (c == '[' || c == ']' || c == '.');
