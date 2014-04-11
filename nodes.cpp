@@ -56,10 +56,7 @@ bool isValidNameExpression(const std::string& name) {
                 (c == '[' || c == ']' || c == '.');
     };
 
-    const bool hasMultiDot = name.find("..") != std::string::npos;
-    const bool isValidSpecial = std::all_of(name.cbegin(), name.cend(), std::cref(specialNameValidator));
-
-    return isValidSpecial && !hasMultiDot;
+    return std::all_of(name.cbegin(), name.cend(), std::cref(specialNameValidator));
 }
 
 /**
