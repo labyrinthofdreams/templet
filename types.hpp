@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <map>
 #include <memory>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 // TODO: Add conversion operators to data classes
@@ -162,6 +163,16 @@ public:
 using types::DataMap;
 using types::DataPtr;
 using types::DataVector;
+
+/**
+ * @brief Wrap an integral type in a DataPtr
+ * @param value Value to wrap
+ * @return Value wrapped in DataPtr
+ */
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
+static types::DataPtr make_data(T value) {
+    return std::make_shared<types::DataValue>(std::to_string(value));
+}
 
 /**
  * @brief Wrap a string in a DataPtr
