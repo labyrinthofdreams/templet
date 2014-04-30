@@ -170,7 +170,7 @@ using types::DataVector;
  * @return Value wrapped in DataPtr
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
-static types::DataPtr make_data(T value) {
+static inline types::DataPtr make_data(T value) {
     return std::make_shared<types::DataValue>(std::to_string(value));
 }
 
@@ -179,7 +179,7 @@ static types::DataPtr make_data(T value) {
  * @param value String to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(std::string value) {
+static inline types::DataPtr make_data(std::string value) {
     return std::make_shared<types::DataValue>(std::move(value));
 }
 
@@ -188,7 +188,7 @@ static types::DataPtr make_data(std::string value) {
  * @param value Vector to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(types::DataVector value) {
+static inline types::DataPtr make_data(types::DataVector value) {
     return std::make_shared<types::DataList>(std::move(value));
 }
 
@@ -197,7 +197,7 @@ static types::DataPtr make_data(types::DataVector value) {
  * @param value Vector of strings to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(std::vector<std::string> value) {
+static inline types::DataPtr make_data(std::vector<std::string> value) {
     DataVector vec;
     for(auto& v : value) {
         vec.push_back(make_data(std::move(v)));
@@ -210,7 +210,7 @@ static types::DataPtr make_data(std::vector<std::string> value) {
  * @param value Initializer list to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(std::initializer_list<std::string> value) {
+static inline types::DataPtr make_data(std::initializer_list<std::string> value) {
     return std::make_shared<types::DataList>(std::move(value));
 }
 
@@ -219,7 +219,7 @@ static types::DataPtr make_data(std::initializer_list<std::string> value) {
  * @param value DataMap to wrap
  * @return Value wrapped in DataPtr
  */
-static types::DataPtr make_data(types::DataMap value) {
+static inline types::DataPtr make_data(types::DataMap value) {
     return std::make_shared<types::DataMapper>(std::move(value));
 }
 
