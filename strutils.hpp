@@ -32,14 +32,14 @@ THE SOFTWARE.
 
 namespace mylib {
 
-static bool starts_with(const std::string& lhs, const std::string& rhs) {
+static inline bool starts_with(const std::string& lhs, const std::string& rhs) {
     if(lhs.size() < rhs.size()) {
         return false;
     }
     return std::equal(rhs.cbegin(), rhs.cend(), lhs.begin());
 }
 
-static bool ends_with(const std::string& lhs, const std::string& rhs) {
+static inline bool ends_with(const std::string& lhs, const std::string& rhs) {
     if(lhs.size() < rhs.size()) {
         return false;
     }
