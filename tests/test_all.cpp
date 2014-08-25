@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "gtest/gtest.h"
@@ -12,6 +13,16 @@ protected:
 };
 
 using namespace templet;
+
+TEST(FreeParseFunctionTest, SimpleSubstitution) {
+    templet::DataMap map;
+    map["name"] = templet::make_data("John");
+
+    std::ostringstream os;
+    templet::parse("hello {$name}", map, os);
+
+    EXPECT_EQ(os.str(), "hello John");
+}
 
 //
 // Test the make_data functions

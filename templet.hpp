@@ -109,15 +109,6 @@ private:
      */
     void reset();
 
-    /**
-     * @brief Tokenize a string into a vector of nodes
-     * @param in String to tokenize
-     * @exception templet::exception::InvalidTagError if the template contains an invalid tag
-     * @exception std::exception for any stdlib exceptions
-     * @return Vector of tokenized nodes
-     */
-    std::vector<std::shared_ptr<nodes::Node>> tokenize(std::string &in);
-
 public:
     /**
      * @brief Default empty constructor
@@ -182,6 +173,26 @@ public:
      */
     std::string result() const;
 };
+
+/**
+ * @brief Tokenize a string into a vector of nodes
+ * @param in String to tokenize
+ * @exception templet::exception::InvalidTagError if the template contains an invalid tag
+ * @exception std::exception for any stdlib exceptions
+ * @return Vector of tokenized nodes
+ */
+std::vector<std::shared_ptr<nodes::Node>> tokenize(std::string &in);
+
+
+/**
+ * @brief Parse a string with some values
+ * @param text String to parse
+ * @param values Substitution values
+ * @param os Output
+ * @exception templet::exception::InvalidTagError
+ * @exception templet::exception::MissingTagError
+ */
+void parse(std::string text, const templet::DataMap &values, std::ostream& os);
 
 } // namespace templet
 

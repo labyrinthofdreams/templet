@@ -62,50 +62,10 @@ std::shared_ptr<Node> factory_tag_parser(const std::string& tagName, const std::
 
 }
 
-Templet::Templet(std::string text)
-    : _text(std::move(text)),
-      _parsed(),
-      _nodes()
-{}
+namespace templet {
 
-void Templet::reset() {
-    _parsed.str("");
-    _nodes.clear();
-}
-
-void Templet::setTemplate(std::string str) {
-    _text.swap(str);
-    reset();
-}
-
-std::string Templet::parse(const DataMap &values) {
-    try {
-        reset();
-        auto copied = _text;
-        _nodes = tokenize(copied);
-        for(const auto& node : _nodes) {
-            node->evaluate(_parsed, values);
-        }
-    }
-    catch(const templet::exception::InvalidTagError& ex) {
-        throw;
-    }
-    catch(const templet::exception::MissingTagError& ex) {
-        throw;
-    }
-    catch(...) {
-        throw;
-    }
-
-    return result();
-}
-
-std::string Templet::result() const {
-    return _parsed.str();
-}
-
-std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
-    std::vector<std::shared_ptr<Node> > nodes;
+std::vector<std::shared_ptr<nodes::Node> > tokenize(std::string &in) try {
+    std::vector<std::shared_ptr<nodes::Node> > nodes;
     while(!in.empty()) {
         // Parse TEXT until first TAG
         const auto pos = in.find('{');
@@ -155,7 +115,7 @@ std::vector<std::shared_ptr<Node> > Templet::tokenize(std::string &in) try {
             else {
                 auto node = factory_tag_parser(inner, tag);
                 in.erase(0, tag.size());
-                node->setChildren(tokenize(in));
+                node->setChildren(::tokenize(in));
                 nodes.push_back(std::move(node));
             }
         }
@@ -170,4 +130,64 @@ catch(const templet::exception::InvalidTagError& ex) {
 }
 catch(...) {
     throw;
+}
+
+void parse(std::string text, const templet::DataMap &values, std::ostream& os) try {
+    auto nodes = tokenize(text);
+    for(const auto& node : nodes) {
+        node->evaluate(os, values);
+    }
+}
+catch(const templet::exception::InvalidTagError& ex) {
+    throw;
+}
+catch(const templet::exception::MissingTagError& ex) {
+    throw;
+}
+catch(...) {
+    throw;
+}
+
+} // namespace templet
+
+Templet::Templet(std::string text)
+    : _text(std::move(text)),
+      _parsed(),
+      _nodes()
+{}
+
+void Templet::reset() {
+    _parsed.str("");
+    _nodes.clear();
+}
+
+void Templet::setTemplate(std::string str) {
+    _text.swap(str);
+    reset();
+}
+
+std::string Templet::parse(const DataMap &values) {
+    try {
+        reset();
+        auto copied = _text;
+        _nodes = ::tokenize(copied);
+        for(const auto& node : _nodes) {
+            node->evaluate(_parsed, values);
+        }
+    }
+    catch(const templet::exception::InvalidTagError& ex) {
+        throw;
+    }
+    catch(const templet::exception::MissingTagError& ex) {
+        throw;
+    }
+    catch(...) {
+        throw;
+    }
+
+    return result();
+}
+
+std::string Templet::result() const {
+    return _parsed.str();
 }

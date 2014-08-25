@@ -107,32 +107,6 @@ int parse_array_index(std::string in) {
 }
 
 /**
- * @brief Parse a single tag name with optional array index
- *
- * Given a string config[5] returns pair("config", 5)
- *
- * @param in Tag name to parse as a string
- * @exception templet::exception::InvalidTagError if the index is negative
- * or if parse_array_index throws
- * @return Tag name and index value as a pair
- */
-std::pair<std::string, int> parse_tag_name(std::string in) {
-    // TODO: Add name validation here (e.g. checkibng final ])?
-    const auto arr_pos = in.find('[');
-    if(arr_pos == std::string::npos) {
-        return {std::move(in), -1};
-    }
-
-    const int idx = parse_array_index(in.substr(arr_pos));
-    if(idx < 0) {
-        throw templet::exception::InvalidTagError("Invalid array index: Value must not be negative");
-    }
-    in.erase(arr_pos);
-
-    return {std::move(in), idx};
-}
-
-/**
  * @brief Parse a full tag name
  *
  * Parses a full tag name, e.g.: config.servers[1].users[6].username
