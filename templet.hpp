@@ -172,6 +172,17 @@ public:
  */
 std::vector<std::shared_ptr<nodes::Node>> tokenize(std::string &in);
 
+
+/**
+ * @brief Parse a string with some values
+ * @param text String to parse
+ * @param values Substitution values
+ * @param os Output
+ * @exception templet::exception::InvalidTagError
+ * @exception templet::exception::MissingTagError
+ */
+void parse(std::string text, const templet::DataMap &values, std::ostream& os);
+
 } // namespace templet
 
 #endif // TEMPLET_HPP

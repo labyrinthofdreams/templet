@@ -62,6 +62,8 @@ std::shared_ptr<Node> factory_tag_parser(const std::string& tagName, const std::
 
 }
 
+namespace templet {
+
 std::vector<std::shared_ptr<nodes::Node> > tokenize(std::string &in) try {
     std::vector<std::shared_ptr<nodes::Node> > nodes;
     while(!in.empty()) {
@@ -129,6 +131,24 @@ catch(const templet::exception::InvalidTagError& ex) {
 catch(...) {
     throw;
 }
+
+void parse(std::string text, const templet::DataMap &values, std::ostream& os) try {
+    auto nodes = tokenize(text);
+    for(const auto& node : nodes) {
+        node->evaluate(os, values);
+    }
+}
+catch(const templet::exception::InvalidTagError& ex) {
+    throw;
+}
+catch(const templet::exception::MissingTagError& ex) {
+    throw;
+}
+catch(...) {
+    throw;
+}
+
+} // namespace templet
 
 Templet::Templet(std::string text)
     : _text(std::move(text)),
