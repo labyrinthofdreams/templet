@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 #include <memory>
+#include <utility>
 #include "nodes.hpp"
 #include "strutils.hpp"
 #include "templet.hpp"
@@ -148,13 +149,35 @@ catch(...) {
     throw;
 }
 
-} // namespace templet
-
 Templet::Templet(std::string text)
     : _text(std::move(text)),
       _parsed(),
       _nodes()
 {}
+
+Templet::Templet(const Templet &other) : _text(other._text),
+    _parsed(other._parsed.str()),
+    _nodes(other._nodes)
+{}
+
+Templet::Templet(Templet &&other) : _text(std::move(other._text)),
+    _parsed(other._parsed.str()),
+    _nodes(std::move(other._nodes))
+{}
+
+Templet& Templet::operator=(const Templet &other) {
+    _parsed.str(other._parsed.str());
+    _nodes = other._nodes;
+
+    return *this;
+}
+
+Templet& Templet::operator=(Templet &&other) {
+    _parsed.str(other._parsed.str());
+    _nodes = std::move(other._nodes);
+
+    return *this;
+}
 
 void Templet::reset() {
     _parsed.str("");
@@ -191,3 +214,5 @@ std::string Templet::parse(const DataMap &values) {
 std::string Templet::result() const {
     return _parsed.str();
 }
+
+} // namespace templet

@@ -115,16 +115,11 @@ public:
      */
     Templet() = default;
 
-    Templet(const Templet& other) : _text(other._text),
-        _parsed(other._parsed.str()),
-        _nodes(other._nodes)
-        {}
-    Templet(Templet&& other) : _text(std::move(other._text)),
-    _parsed(other._parsed.str()),
-    _nodes(std::move(other._nodes))
-    {}
-    Templet& operator=(const Templet&) = default;
-    Templet& operator=(Templet&&) = default;
+    Templet(const Templet& other);
+    Templet(Templet&& other);
+
+    Templet& operator=(const Templet&);
+    Templet& operator=(Templet&&);
 
     /**
      * @brief Construct Templet object with template text
