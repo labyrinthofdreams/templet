@@ -11,3 +11,4 @@ INCLUDEPATH += ..\gtest\include ..\
 
 LIBS += -L..\templet\gtest\build -llibgtest
 
+QMAKE_CXXFLAGS += -std=c++11
