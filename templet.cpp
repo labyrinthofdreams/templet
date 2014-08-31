@@ -121,7 +121,8 @@ std::vector<std::shared_ptr<nodes::Node> > tokenize(std::string &in) try {
             }
         }
         else {
-            throw templet::exception::InvalidTagError("Unrecognized tag: " + tag);
+            nodes.push_back(std::make_shared<Text>(tag));
+            in.erase(0, tag.size());
         }
     }
     return nodes;
