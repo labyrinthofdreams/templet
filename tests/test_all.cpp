@@ -163,13 +163,13 @@ TEST_F(TempletParserTest, ResultAfterInvalidFile) {
 
 TEST_F(TempletParserTest, UnrecognizedTag) {
     tpl.setTemplate("hello {world}");
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    EXPECT_EQ(tpl.parse(map), "hello {world}");
 
     tpl.setTemplate("hello {*world}");
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    EXPECT_EQ(tpl.parse(map), "hello {*world}");
 
     tpl.setTemplate("hello {% infloop %}world{% endinfloop %}");
-    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
+    ASSERT_ANY_THROW(tpl.parse(map));
 }
 
 TEST_F(TempletParserTest, IgnoredTag) {
