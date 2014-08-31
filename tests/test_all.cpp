@@ -169,7 +169,7 @@ TEST_F(TempletParserTest, UnrecognizedTag) {
     EXPECT_EQ(tpl.parse(map), "hello {*world}");
 
     tpl.setTemplate("hello {% infloop %}world{% endinfloop %}");
-    ASSERT_ANY_THROW(tpl.parse(map));
+    ASSERT_THROW(tpl.parse(map), templet::exception::InvalidTagError);
 }
 
 TEST_F(TempletParserTest, IgnoredTag) {
